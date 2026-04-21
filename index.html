@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>My Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <canvas id="bgCanvas"></canvas>
+  <!-- Navbar -->
+  <header>
+
+    <nav>
+      <div class="logo">
+        <svg width="40" height="40" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
+
+          <defs>
+
+            <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#00c6ff" />
+              <stop offset="100%" stop-color="#8a2be2" />
+            </linearGradient>
+
+            <linearGradient id="stone" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#1e2238" />
+              <stop offset="100%" stop-color="#0b0f1f" />
+            </linearGradient>
+
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="2.5" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+
+          </defs>
+
+          <!-- square tablet -->
+          <rect x="10" y="10" width="300" height="300" rx="18" fill="url(#stone)" stroke="url(#grad)"
+            stroke-width="3" />
+
+          <!-- lightning network -->
+          <g stroke="url(#grad)" stroke-width="2.5" fill="none" filter="url(#glow)">
+
+            <!-- top -->
+            <line x1="160" y1="60" x2="120" y2="110" />
+            <line x1="160" y1="60" x2="200" y2="110" />
+
+            <!-- mid -->
+            <line x1="120" y1="110" x2="90" y2="160" />
+            <line x1="120" y1="110" x2="140" y2="160" />
+
+            <line x1="200" y1="110" x2="180" y2="160" />
+            <line x1="200" y1="110" x2="230" y2="160" />
+
+            <!-- bottom -->
+            <line x1="140" y1="160" x2="120" y2="210" />
+            <line x1="180" y1="160" x2="200" y2="210" />
+
+            <line x1="120" y1="210" x2="160" y2="250" />
+            <line x1="200" y1="210" x2="160" y2="250" />
+
+          </g>
+
+          <!-- nodes -->
+          <g fill="url(#grad)" filter="url(#glow)">
+
+            <circle cx="160" cy="60" r="6" />
+
+            <circle cx="120" cy="110" r="6" />
+            <circle cx="200" cy="110" r="6" />
+
+            <circle cx="90" cy="160" r="6" />
+            <circle cx="140" cy="160" r="6" />
+            <circle cx="180" cy="160" r="6" />
+            <circle cx="230" cy="160" r="6" />
+
+            <circle cx="120" cy="210" r="6" />
+            <circle cx="200" cy="210" r="6" />
+
+            <circle cx="160" cy="250" r="6" />
+
+          </g>
+
+        </svg>
+      </div>
+
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+      <canvas id="heroCanvas"></canvas>
+
+      <svg id="stickSVG" width="1600" height="500" viewBox="0 0 1600 500" stroke="#00f7ff" stroke-width="4" fill="none">
+
+      </svg>
+
+      <svg id="neonTriangle" width="400" height="400" viewBox="0 0 400 400">
+
+        <defs>
+
+          <linearGradient id="triGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#00ffff" />
+            <stop offset="50%" stop-color="#00aaff" />
+            <stop offset="100%" stop-color="#0077ff" />
+          </linearGradient>
+
+          <filter id="neonBlur">
+            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+
+        </defs>
+
+        <!-- back triangle -->
+        <polygon points="200,50 70,330 350,330" stroke="#002244" stroke-width="2" fill="none" />
+
+        <!-- front neon triangle -->
+        <polygon points="200,40 60,320 340,320" stroke="url(#triGlow)" stroke-width="4" fill="none"
+          filter="url(#neonBlur)" />
+
+      </svg>
+
+      <svg id="neonSquare" width="300" height="300" viewBox="0 0 300 300">
+
+        <defs>
+
+          <linearGradient id="squareGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#00ffff" />
+            <stop offset="50%" stop-color="#00aaff" />
+            <stop offset="100%" stop-color="#0077ff" />
+          </linearGradient>
+
+          <filter id="squareBlur">
+            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+
+        </defs>
+
+        <!-- back square -->
+        <rect x="40" y="40" width="200" height="200" stroke="#002244" stroke-width="2" fill="none" />
+
+        <!-- front neon square -->
+        <rect x="30" y="30" width="200" height="200" stroke="url(#squareGlow)" stroke-width="4"
+          fill="rgba(0,255,255,0.08)" filter="url(#squareBlur)" />
+
+      </svg>
+
+      <svg id="neonCircle" viewBox="0 0 200 200">
+
+        <defs>
+
+          <radialGradient id="circleGlow">
+            <stop offset="0%" stop-color="#00ffff" />
+            <stop offset="70%" stop-color="#0088ff" />
+            <stop offset="100%" stop-color="#002244" />
+          </radialGradient>
+
+          <filter id="circleBlur">
+            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+
+        </defs>
+
+        <circle cx="100" cy="100" r="70" stroke="url(#circleGlow)" stroke-width="4" fill="rgba(0,255,255,0.08)"
+          filter="url(#circleBlur)" />
+
+      </svg>
+
+
+
+    </section>
+
+    <!-- About -->
+    <section id="about">
+
+
+      <div class="about-panel">
+        <h2>About Me</h2>
+        <div class="about-container">
+
+          <div class="about-left">
+
+            <div class="about-tabs">
+
+              <button class="active" data-tab="bio">Bio</button>
+              <button data-tab="professional">Professional</button>
+              <button data-tab="hobbies">Hobbies</button>
+
+            </div>
+
+            <div class="about-text">
+
+              <div class="tab active" id="bio">
+                <svg class="tab-bg-svg" viewBox="0 0 600 200">
+
+                  <polygon points="100,40 110,70 140,70 115,90 125,120 100,100 75,120 85,90 60,70 90,70" />
+
+                  <polygon points="300,20 310,50 340,50 315,70 325,100 300,80 275,100 285,70 260,50 290,50" />
+
+                  <polygon points="500,60 510,90 540,90 515,110 525,140 500,120 475,140 485,110 460,90 490,90" />
+
+                </svg>
+
+                <p>
+                  I build modern web applications and systems from scratch,
+                  focused on scalable architecture and interactive UI.
+                </p>
+
+              </div>
+
+
+              <div class="tab" id="professional">
+
+                <svg class="tab-bg-svg" viewBox="0 0 600 200">
+
+                  <line x1="0" y1="100" x2="600" y2="100" />
+                  <line x1="100" y1="0" x2="100" y2="200" />
+                  <line x1="300" y1="0" x2="300" y2="200" />
+                  <line x1="500" y1="0" x2="500" y2="200" />
+
+                </svg>
+
+                <p>
+                  Full-stack developer working with React, Node, Express,
+                  and modern JavaScript architecture.
+                </p>
+
+              </div>
+
+
+              <div class="tab" id="hobbies">
+
+                <svg class="tab-bg-svg" viewBox="0 0 600 200">
+
+                  <polygon points="100,150 200,20 300,150" />
+                  <polygon points="350,150 450,20 550,150" />
+
+                </svg>
+
+                <p>
+                  I enjoy exploring new technologies, UI design systems,
+                  and building experimental projects.
+                </p>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="about-image">
+
+            <div class="about-sprite" id="aboutSprite"></div>
+
+          </div>
+
+        </div>
+      </div>
+
+
+    </section>
+
+    <!-- Skills -->
+    <section id="skills">
+
+      <h2>Skills</h2>
+
+      <div class="skills-accordion">
+
+        <!-- Frontend -->
+        <div class="skill-category">
+
+          <button class="skill-header">
+            Frontend Development
+            <span class="arrow">▼</span>
+          </button>
+
+          <div class="skill-content">
+
+            <div class="skill-row">
+              <span>HTML</span>
+              <span class="tier tier-s">S</span>
+            </div>
+
+            <div class="skill-row">
+              <span>CSS</span>
+              <span class="tier tier-a">A</span>
+            </div>
+
+            <div class="skill-row">
+              <span>React</span>
+              <span class="tier tier-a">A</span>
+            </div>
+
+            <div class="skill-row">
+              <span>JavaScript</span>
+              <span class="tier tier-s">S</span>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- Backend -->
+        <div class="skill-category">
+
+          <button class="skill-header">
+            Backend Development
+          </button>
+
+          <div class="skill-content">
+
+            <div class="skill-row">
+              <span>Node.js</span>
+              <span class="tier tier-a">A</span>
+            </div>
+
+            <div class="skill-row">
+              <span>Express</span>
+              <span class="tier tier-a">A</span>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- Database -->
+        <div class="skill-category">
+
+          <button class="skill-header">
+            Databases
+          </button>
+
+          <div class="skill-content">
+
+            <div class="skill-row">
+              <span>MongoDB</span>
+              <span class="tier tier-b">B</span>
+            </div>
+
+            <div class="skill-row">
+              <span>MySQL</span>
+              <span class="tier tier-a">A</span>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- <section id="game">
+
+      <div class="game-panel">
+
+        <h2>Mini World</h2>
+        <canvas id="gameCanvas" tabindex="0"></canvas>
+      </div>
+
+    </section> -->
+
+
+
+    <section id="game">
+
+      <div class="game-panel">
+
+        <h2>Mini World</h2>
+
+        <p>
+          Mini World is a fast-paced 2D browser game where the player pilots a flying craft through a hostile
+          environment, avoiding obstacles and defeating airborne enemies.
+          The game features real-time movement, collision detection, scoring, and dynamic enemy spawning.
+        </p>
+
+        <p>
+          <strong>Controls:</strong><br>
+          Arrow Keys – Move<br>
+          Space – Jump<br>
+          F – Shoot<br>
+          R – Restart (after game over)
+        </p>
+
+        <p>
+          <strong>Built With:</strong><br>
+          HTML5 Canvas, JavaScript (Vanilla), CSS
+        </p>
+
+        <p>
+          <strong>Note:</strong><br>
+          This is a demo project created to showcase game logic, rendering, and interaction systems in a browser
+          environment.
+        </p>
+
+        <canvas id="gameCanvas" tabindex="0"></canvas>
+
+      </div>
+
+    </section>
+
+
+
+
+
+    <!-- Projects -->
+    <section id="projects">
+      <h2>Projects</h2>
+
+      <div class="project-card">
+        <h3>Room Listing App</h3>
+        <p>A platform for listing and filtering rooms.</p>
+      </div>
+
+      <div class="project-card">
+        <h3>Memo Approval System</h3>
+        <p>A role-based memo approval system.</p>
+      </div>
+
+    </section>
+
+
+    <!-- 🔥 NEW WRAPPER -->
+    <section id="weather">
+
+      <div class="weather-container">
+
+        <!-- LEFT: DESCRIPTION -->
+        <div class="app-panel">
+
+          <h2>Weather App</h2>
+          <p id="loadingText" style="display:none;">Loading...</p>
+          <p>
+            The Weather App is a dynamic web application that provides real-time weather data and forecasts based on
+            user input. It integrates with a live weather API to display current conditions, temperature trends, and
+            environmental metrics such as humidity, wind speed, and “feels like” temperature.
+
+            The application enhances user experience through responsive UI design, dynamic theme changes based on
+            weather conditions, and data visualization using forecast patterns and charts. It demonstrates strong
+            proficiency in API integration, asynchronous JavaScript, DOM manipulation, and interactive UI development.
+
+            This project was built as a portfolio demo to showcase practical frontend development skills and the ability
+            to create engaging, data-driven applications.
+
+          </p>
+
+          <p>
+            <strong>Features:</strong><br>
+            • Search by city<br>
+            • Real-time weather data<br>
+            • Dynamic weather visuals<br>
+            • Forecast display
+          </p>
+
+          <p>
+            <strong>Tech:</strong> HTML, CSS, JavaScript, Weather API
+          </p>
+
+        </div>
+
+
+
+        <!-- RIGHT: WEATHER UI -->
+        <div class="weather-app">
+
+          <!-- SEARCH -->
+          <div class="search-box">
+            <input type="text" id="cityInput" placeholder="Enter city..." />
+            <button id="searchBtn">Search</button>
+          </div>
+
+          <!-- MAIN DISPLAY -->
+          <div class="weather-main">
+
+            <h3 id="location">--</h3>
+
+            <div class="weather-display">
+              <img id="weatherIcon" src="data:image/svg+xml;utf8,
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
+  <circle cx='50' cy='50' r='20' fill='%23ccc'/>
+  <g stroke='%23ccc' stroke-width='4'>
+    <line x1='50' y1='5' x2='50' y2='20'/>
+    <line x1='50' y1='80' x2='50' y2='95'/>
+    <line x1='5' y1='50' x2='20' y2='50'/>
+    <line x1='80' y1='50' x2='95' y2='50'/>
+    <line x1='20' y1='20' x2='30' y2='30'/>
+    <line x1='70' y1='70' x2='80' y2='80'/>
+    <line x1='70' y1='30' x2='80' y2='20'/>
+    <line x1='20' y1='80' x2='30' y2='70'/>
+  </g>
+</svg>" alt="weather icon" />
+              <h1 id="temperature">--°C</h1>
+            </div>
+
+            <p id="condition">--</p>
+
+          </div>
+
+
+          <!-- EXTRA INFO -->
+          <div class="weather-info">
+            <div>
+              💧<br>
+              <span id="humidity">--</span>%<br>
+              <small>Humidity</small>
+              <small id="humidityStatus"></small>
+            </div>
+
+            <div>
+              🌬<br>
+              <span id="wind">--</span> km/h<br>
+              <small>Wind</small>
+              <small id="windStatus"></small>
+            </div>
+
+            <div>
+              🌡<br>
+              <span id="feelsLike">--</span>°C<br>
+              <small>Feels Like</small>
+              <small id="feelStatus"></small>
+            </div>
+          </div>
+
+          <div class="weather-patterns">
+            <h4>Weather Patterns</h4>
+            <p id="trendText">--</p>
+          </div>
+
+          <br>
+
+          <div class="weather-chart">
+            <canvas id="tempChart"></canvas>
+          </div>
+
+          <br>
+          <!-- FORECAST -->
+          <div class="forecast" id="forecast"></div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <section id="crypto">
+
+      <div class="crypto-container">
+
+        <!-- LEFT -->
+        <div class="app-panel">
+          <h2>Crypto Tracker</h2>
+
+          <p>
+            This application displays real-time cryptocurrency data including prices,
+            market trends, and performance metrics.
+          </p>
+
+          <p>
+            <strong>Features:</strong><br>
+            • Live crypto prices<br>
+            • Market trend tracking<br>
+            • Search & filter coins<br>
+          </p>
+
+          <p>
+            <strong>Tech:</strong> HTML, CSS, JavaScript, Crypto API
+          </p>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="crypto-app">
+
+          <!-- HEADER -->
+          <div class="crypto-header">
+            <h3>📊 Market Overview</h3>
+          </div>
+
+          <!-- CONTROLS -->
+          <div class="crypto-controls">
+            <input type="text" id="cryptoSearch" placeholder="Search coin..." />
+            <button id="sortBtn">Sort by Price</button>
+          </div>
+
+          <!-- 📊 REPORT PANEL (🔥 MOVE UP) -->
+          <div class="crypto-report">
+
+            <div class="report-card">
+              <h4>🚀 Top Gainer</h4>
+              <p id="reportGainer">--</p>
+            </div>
+
+            <div class="report-card">
+              <h4>📉 Top Loser</h4>
+              <p id="reportLoser">--</p>
+            </div>
+
+            <div class="report-card">
+              <h4>💰 Avg Price</h4>
+              <p id="avgPrice">--</p>
+            </div>
+
+            <div class="report-card">
+              <h4>🏦 Total Market Cap</h4>
+              <p id="totalMarketCap">--</p>
+            </div>
+
+          </div>
+
+          <!-- SUMMARY STRIP -->
+          <div class="crypto-summary">
+            <div id="topGainer">🚀 Top Gainer: --</div>
+            <div id="topLoser">📉 Top Loser: --</div>
+          </div>
+
+          <!-- TABLE -->
+          <div class="crypto-table-wrapper">
+            <table id="cryptoTable">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Coin</th>
+                  <th>Price</th>
+                  <th>24h</th>
+                  <th>Market Cap</th>
+                </tr>
+              </thead>
+
+              <tbody id="cryptoBody">
+                <tr>
+                  <td colspan="5" style="text-align:center;">
+                    Loading market data...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- PAGINATION -->
+          <div class="crypto-pagination">
+            <button id="prevPage">⬅ Prev</button>
+            <span id="pageNumber">Page 1</span>
+            <button id="nextPage">Next ➡</button>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+   <section id="livescore">
+
+  <div class="livescore-container">
+
+    <!-- LEFT -->
+    <div class="app-panel">
+      <h2>Live Score Predictor</h2>
+
+      <p>
+        This app displays live football matches and predicts outcomes
+        using probability-based logic.
+      </p>
+
+      <p>
+        <strong>Features:</strong><br>
+        • Live match scores<br>
+        • Prediction engine<br>
+        • Accuracy feedback
+      </p>
+
+      <p>
+        <strong>Tech:</strong> JavaScript, API Integration
+      </p>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="livescore-app">
+
+  <!-- 🔥 CATEGORY NAV (TABS) -->
+  <div class="score-nav">
+    <div class="nav-item active" data-sport="soccer">⚽ Soccer</div>
+    <div class="nav-item" data-sport="basketball">🏀 Basketball</div>
+    <div class="nav-item" data-sport="tennis">🎾 Tennis</div>
+  </div>
+
+  <!-- 📊 MATCHES TABLE -->
+  <div class="matches-section">
+    <h4>📅 Matches</h4>
+
+    <table class="matches-table">
+      <thead>
+        <tr>
+          <th>Match</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+
+      <tbody id="matchesList">
+        <tr>
+          <td colspan="2">Loading matches...</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 🔮 PREDICTION PANEL -->
+  <div class="predictions-section">
+  <h4>🔮 Match Prediction</h4>
+
+  <div id="predictionBox" class="prediction-card">
+    <p class="placeholder">Select a match to view prediction</p>
+  </div>
+</div>
+
+</div>
+
+  </div>
+
+</section>
+
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script>
+  <script src="game.js"></script>
+  <script src="weather.js"></script>
+  <script src="crypto.js"></script>
+  <script src="liveScore.js"></script>
+</body>
+
+</html>
