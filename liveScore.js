@@ -13,8 +13,7 @@ const TOKEN = "pdwdED3ClhOMI3NsOiRXqApHhOU2qhnaWfdc0zrbzqqYBSxDIYEcWCiIsS0T";
 
 
 // ✅ USE FIXTURES (NOT LIVESCORES)
-const url = `https://corsproxy.io/?https://api.sportmonks.com/v3/football/fixtures?api_token=${TOKEN}&include=participants;scores&per_page=10`;
-
+const url = `https://corsproxy.io/?https://api.sportmonks.com/v3/football/livescores?api_token=${TOKEN}&include=participants;scores;state`;
 // ======================
 // 🚀 INIT AFTER DOM READY
 // ======================
@@ -51,13 +50,13 @@ function renderMatches() {
         let status = "";
 
         if (match.isLive) {
-            status = `🔴 ${match.scoreA} - ${match.scoreB}`;
+            status = `🔴 ${match.scoreA ?? 0} - ${match.scoreB ?? 0}`;
+        }
+        else if (match.state === "FT" || match.state === "FINISHED") {
+            status = `✔ ${match.scoreA ?? 0} - ${match.scoreB ?? 0}`;
         }
         else if (match.kickoff && match.kickoff > now) {
             status = `⏳ ${formatTime(match.kickoff)}`;
-        }
-        else if (match.kickoff && match.kickoff <= now) {
-            status = "✔ FT";
         }
         else {
             status = "⏳ --";
@@ -237,8 +236,6 @@ async function loadLiveMatches() {
             // ✅ USE HELPER
             const { home: scoreA, away: scoreB } = getScore(scores);
 
-            const scoreA = scoreObj?.score?.home ?? null;
-            const scoreB = scoreObj?.score?.away ?? null;
 
             // 🧠 MODEL
             const baseAttack = 1.2;
@@ -252,6 +249,8 @@ async function loadLiveMatches() {
 
             const strengthA = attackA / (defenseB || 1);
             const strengthB = attackB / (defenseA || 1);
+
+            const state = fixture.state?.short_name || "";
 
             // 🔥 FIXED TIME
             let kickoff = null;
@@ -274,7 +273,8 @@ async function loadLiveMatches() {
                 strengthA,
                 strengthB,
 
-                isLive: scoreA !== null && scoreB !== null,
+                state,                // ✅ ADD THIS
+                isLive: state === "LIVE" || state === "INPLAY",
 
                 kickoff
             };
