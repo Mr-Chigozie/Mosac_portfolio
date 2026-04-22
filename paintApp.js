@@ -118,14 +118,30 @@ function placeStamp(x, y) {
 }
 
 function drawTree(x, y, size) {
-  ctx.fillStyle = colorPicker.value;
+  const s = size;
+
+  ctx.lineJoin = "round";
 
   // trunk
-  ctx.fillRect(x - size * 0.2, y, size * 0.4, size);
+  ctx.fillStyle = "#5a3d1e";
+  ctx.fillRect(x - s * 0.2, y, s * 0.4, s * 1);
 
-  // leaves
+  // foliage layers
+  ctx.fillStyle = colorPicker.value;
+
+  // bottom layer
   ctx.beginPath();
-  ctx.arc(x, y - size * 0.5, size, 0, Math.PI * 2);
+  ctx.arc(x, y - s * 0.2, s * 0.9, 0, Math.PI * 2);
+  ctx.fill();
+
+  // middle layer
+  ctx.beginPath();
+  ctx.arc(x, y - s * 0.9, s * 0.7, 0, Math.PI * 2);
+  ctx.fill();
+
+  // top layer
+  ctx.beginPath();
+  ctx.arc(x, y - s * 1.5, s * 0.5, 0, Math.PI * 2);
   ctx.fill();
 }
 
@@ -146,18 +162,35 @@ function drawCar(x, y, size) {
 }
 
 function drawCar(x, y, size) {
+  const s = size;
+
+  ctx.lineJoin = "round";
+  ctx.lineCap = "round";
+
   ctx.fillStyle = colorPicker.value;
 
-  // body
-  ctx.fillRect(x - size, y, size * 2, size * 0.6);
-
-  // top
-  ctx.fillRect(x - size * 0.6, y - size * 0.5, size * 1.2, size * 0.5);
-
-  // wheels
+  // 🚗 body (rounded)
   ctx.beginPath();
-  ctx.arc(x - size * 0.6, y + size * 0.6, size * 0.3, 0, Math.PI * 2);
-  ctx.arc(x + size * 0.6, y + size * 0.6, size * 0.3, 0, Math.PI * 2);
+  ctx.roundRect(x - s, y, s * 2, s * 0.6, s * 0.2);
+  ctx.fill();
+
+  // 🚗 top cabin
+  ctx.beginPath();
+  ctx.roundRect(x - s * 0.6, y - s * 0.6, s * 1.2, s * 0.6, s * 0.2);
+  ctx.fill();
+
+  // 🪟 windows
+  ctx.fillStyle = "#fff";
+  ctx.beginPath();
+  ctx.roundRect(x - s * 0.4, y - s * 0.5, s * 0.8, s * 0.4, s * 0.1);
+  ctx.fill();
+
+  // ⚫ wheels
+  ctx.fillStyle = "#222";
+
+  ctx.beginPath();
+  ctx.arc(x - s * 0.6, y + s * 0.6, s * 0.3, 0, Math.PI * 2);
+  ctx.arc(x + s * 0.6, y + s * 0.6, s * 0.3, 0, Math.PI * 2);
   ctx.fill();
 }
 
