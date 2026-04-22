@@ -1573,3 +1573,142 @@ tr {
   background: rgba(255,0,0,0.15);
   color: red;
 }
+
+/* 🎨 PAINT APP */
+.paint-container {
+  display: flex;
+  gap: 30px;
+}
+
+/* RIGHT SIDE APP */
+
+
+/* SIDEBAR */
+
+
+.controls input,
+.controls select,
+.controls button {
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* CANVAS AREA */
+
+
+
+
+
+
+#gallery img {
+  width: 100%;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+}
+
+.stamp-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.stamp {
+  background: #eee;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
+
+  font-size: 18px;
+  transition: 0.2s;
+}
+
+.stamp:hover {
+  background: #ddd;
+}
+
+.stamp.active {
+  background: #222;
+  color: white;
+}
+
+
+
+/* 🎨 PAINT APP */
+.paint-app {
+  flex: 1;
+  display: flex;
+  min-height: 600px;
+  background: #f0f0f0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* LEFT CONTROLS */
+.controls {
+  width: 220px;
+  padding: 15px;
+  background: #ffffff;
+  border-right: 1px solid #ddd;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: #222;
+}
+
+/* RIGHT SIDE STACK */
+.canvas-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0; /* 🔥 prevents overflow bugs */
+}
+
+/* CANVAS AREA */
+.canvas-container {
+  flex: 1;
+  position: relative;
+}
+
+#paintCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: white;
+  cursor: crosshair;
+}
+
+/* 🔥 GALLERY (BOTTOM, NOT OVERLAY) */
+.saved-gallery {
+  height: 140px;
+  flex-shrink: 0; /* 🔥 prevents overlap */
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 8px;
+  background: #fafafa;
+  border-top: 1px solid #ddd;
+
+  overflow: hidden;
+}
+
+/* gallery row */
+#gallery {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+}
+
+/* images */
+#gallery img {
+  height: 100px;
+  width: auto;        /* 🔥 key fix */
+  flex-shrink: 0;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}

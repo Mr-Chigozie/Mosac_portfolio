@@ -570,6 +570,7 @@
     </section>
 
 
+
     <section id="crypto">
 
       <div class="crypto-container">
@@ -677,76 +678,172 @@
     </section>
 
 
+    <section id="paint">
 
-   <section id="livescore">
+      <div class="paint-container">
 
-  <div class="livescore-container">
+        <!-- LEFT: DESCRIPTION -->
+        <div class="app-panel">
+          <h2>Drawing Tool</h2>
 
-    <!-- LEFT -->
-    <div class="app-panel">
-      <h2>Live Score Predictor</h2>
+          <p>
+            A canvas-based drawing tool featuring dynamic brush systems,
+            color control, and interactive rendering.
+          </p>
 
-      <p>
-        This app displays live football matches and predicts outcomes
-        using probability-based logic.
-      </p>
+          <p>
+            <strong>Features:</strong><br>
+            • Multiple brush modes<br>
+            • Color + size control<br>
+            • Save artwork locally<br>
+          </p>
 
-      <p>
-        <strong>Features:</strong><br>
-        • Live match scores<br>
-        • Prediction engine<br>
-        • Accuracy feedback
-      </p>
+          <p>
+            <strong>Tech:</strong> HTML5 Canvas, JavaScript
+          </p>
+        </div>
 
-      <p>
-        <strong>Tech:</strong> JavaScript, API Integration
-      </p>
-    </div>
+        <!-- RIGHT: APP -->
+        <div class="paint-app">
 
-    <!-- RIGHT -->
-    <div class="livescore-app">
+          <!-- CONTROLS -->
+          <div class="controls">
 
-  <!-- 🔥 CATEGORY NAV (TABS) -->
-  <div class="score-nav">
-    <div class="nav-item active" data-sport="soccer">⚽ Soccer</div>
-    <div class="nav-item" data-sport="basketball">🏀 Basketball</div>
-    <div class="nav-item" data-sport="tennis">🎾 Tennis</div>
-  </div>
+            <h3>🎨 Tools</h3>
 
-  <!-- 📊 MATCHES TABLE -->
-  <div class="matches-section">
-    <h4>📅 Matches</h4>
+            <!-- Tool Type -->
+            <label>Tool</label>
+            <select id="toolType">
+              <option value="pen">Pen</option>
+              <option value="brush">Brush</option>
+              <option value="rainbow">Rainbow</option>
 
-    <table class="matches-table">
-      <thead>
-        <tr>
-          <th>Match</th>
-          <th>Status</th>
-        </tr>
-      </thead>
+            </select>
 
-      <tbody id="matchesList">
-        <tr>
-          <td colspan="2">Loading matches...</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+            <!-- Color -->
+            <label>Color</label>
+            <input type="color" id="colorPicker" value="#000000">
 
-  <!-- 🔮 PREDICTION PANEL -->
-  <div class="predictions-section">
-  <h4>🔮 Match Prediction</h4>
+            <!-- Size -->
+            <label>Size</label>
+            <input type="range" id="brushSize" min="1" max="50" value="10">
 
-  <div id="predictionBox" class="prediction-card">
-    <p class="placeholder">Select a match to view prediction</p>
-  </div>
-</div>
+            <!-- Rainbow speed -->
+            <label>Rainbow Speed</label>
+            <input type="range" id="frequency" min="1" max="20" value="5">
 
-</div>
+            <!-- Stamp -->
+            <label>Stamps</label>
 
-  </div>
+            <div id="stampGrid" class="stamp-grid">
 
-</section>
+              <div class="stamp active" data-shape="circle">⚪</div>
+              <div class="stamp" data-shape="square">⬛</div>
+              <div class="stamp" data-shape="triangle">▲</div>
+              <div class="stamp" data-shape="star">★</div>
+              <div class="stamp" data-shape="bear">🐻</div>
+              <div class="stamp" data-shape="tree">🌳</div>
+              <div class="stamp" data-shape="car">🚗</div>
+              <div class="stamp" data-shape="house">🏠</div>
+
+            </div>
+
+            <button id="clearBtn">Clear</button>
+            <button id="saveBtn">Save</button>
+
+          </div>
+
+          <div class="canvas-wrapper">
+
+            <div class="canvas-container">
+              <canvas id="paintCanvas"></canvas>
+            </div>
+
+            <div class="saved-gallery">
+              <h4 style="color: black;">Saved Art</h4>
+              <div id="gallery"></div>
+            </div>
+
+          </div>
+          <!-- CANVAS -->
+
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <section id="livescore">
+
+      <div class="livescore-container">
+
+        <!-- LEFT -->
+        <div class="app-panel">
+          <h2>Live Score Predictor</h2>
+
+          <p>
+            This app displays live football matches and predicts outcomes
+            using probability-based logic.
+          </p>
+
+          <p>
+            <strong>Features:</strong><br>
+            • Live match scores<br>
+            • Prediction engine<br>
+            • Accuracy feedback
+          </p>
+
+          <p>
+            <strong>Tech:</strong> JavaScript, API Integration
+          </p>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="livescore-app">
+
+          <!-- 🔥 CATEGORY NAV (TABS) -->
+          <div class="score-nav">
+            <div class="nav-item active" data-sport="soccer">⚽ Soccer</div>
+            <div class="nav-item" data-sport="basketball">🏀 Basketball</div>
+            <div class="nav-item" data-sport="tennis">🎾 Tennis</div>
+          </div>
+
+          <!-- 📊 MATCHES TABLE -->
+          <div class="matches-section">
+            <h4>📅 Matches</h4>
+
+            <table class="matches-table">
+              <thead>
+                <tr>
+                  <th>Match</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+
+              <tbody id="matchesList">
+                <tr>
+                  <td colspan="2">Loading matches...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- 🔮 PREDICTION PANEL -->
+          <div class="predictions-section">
+            <h4>🔮 Match Prediction</h4>
+
+            <div id="predictionBox" class="prediction-card">
+              <p class="placeholder">Select a match to view prediction</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
 
   </main>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -755,6 +852,7 @@
   <script src="weather.js"></script>
   <script src="crypto.js"></script>
   <script src="liveScore.js"></script>
+  <script src="paintApp.js"></script>
 </body>
 
 </html>
