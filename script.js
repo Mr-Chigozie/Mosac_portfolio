@@ -507,11 +507,6 @@ function animateLines() {
 animateLines();
 
 
-// const canvas = document.getElementById("heroCanvas")
-// const ctx = canvas.getContext("2d")
-
-// canvas.width = window.innerWidth
-// canvas.height = window.innerHeight
 
 const skills = ["HTML", "CSS", "React", "Node", "JavaScript", "Express"]
 
@@ -865,3 +860,20 @@ skillHeaders.forEach(header => {
 
 })
 
+
+
+const tabs = document.querySelectorAll(".tab");
+const views = document.querySelectorAll(".tab-view");
+
+tabs.forEach(tab => {
+  tab.addEventListener("click", () => {
+
+    // remove active
+    tabs.forEach(t => t.classList.remove("active"));
+    views.forEach(v => v.classList.remove("active"));
+
+    // activate clicked
+    tab.classList.add("active");
+    document.getElementById(tab.dataset.tab).classList.add("active");
+  });
+});

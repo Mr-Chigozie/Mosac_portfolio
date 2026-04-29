@@ -1,0 +1,251 @@
+.positive {
+  color: #22c55e;
+}
+
+.negative {
+  color: #ef4444;
+}
+
+/* SECTION */
+#crypto {
+  position: relative;
+  padding: 120px 20px;
+}
+
+/* CONTAINER */
+.crypto-container {
+  max-width: 1100px;
+  margin: auto;
+
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+/* LEFT + RIGHT PANELS */
+.app-panel,
+.crypto-app {
+  flex: 1;
+
+  padding: 30px;
+  border-radius: 16px;
+
+  background: rgba(20, 25, 45, 0.6);
+  backdrop-filter: blur(12px);
+
+  border: 1px solid rgba(0, 247, 255, 0.15);
+
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.4),
+    inset 0 0 30px rgba(0, 247, 255, 0.05);
+
+  position: relative;
+  overflow: hidden;
+}
+
+/* GLOW OVERLAY */
+.app-panel::before,
+.crypto-app::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(0, 247, 255, 0.08),
+    transparent
+  );
+
+  pointer-events: none;
+}
+
+.crypto-header h3 {
+  color: #00f7ff;
+  margin-bottom: 15px;
+}
+
+.crypto-controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.crypto-controls input {
+  flex: 1;
+  padding: 10px;
+
+  border-radius: 8px;
+  border: 1px solid rgba(0, 247, 255, 0.3);
+
+  background: transparent;
+  color: #e2e8f0;
+}
+
+.crypto-controls button {
+  padding: 10px 15px;
+  border-radius: 8px;
+
+  background: #00f7ff;
+  color: #020617;
+
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.crypto-controls button:hover {
+  transform: scale(1.05);
+}
+
+.crypto-report {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.report-card {
+  padding: 12px;
+  border-radius: 10px;
+
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(0, 247, 255, 0.1);
+
+  text-align: center;
+}
+
+.report-card h4 {
+  font-size: 13px;
+  margin-bottom: 5px;
+  color: #00f7ff;
+}
+
+.crypto-summary {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+
+  font-size: 13px;
+  opacity: 0.85;
+}
+
+.crypto-table-wrapper {
+  overflow-x: auto;
+}
+
+#cryptoTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+#cryptoTable th {
+  text-align: left;
+  padding: 10px;
+  color: #00f7ff;
+  border-bottom: 1px solid rgba(0, 247, 255, 0.2);
+}
+
+#cryptoTable td {
+  padding: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+/* ROW HOVER */
+#cryptoTable tbody tr:hover {
+  background: rgba(0, 247, 255, 0.05);
+}
+
+.crypto-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-top: 15px;
+}
+
+.crypto-pagination button {
+  padding: 6px 12px;
+  border-radius: 6px;
+
+  background: transparent;
+  border: 1px solid #00f7ff;
+  color: #00f7ff;
+
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.crypto-pagination button:hover {
+  background: #00f7ff;
+  color: #020617;
+}
+
+#cryptoTable tbody tr {
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+#cryptoTable tbody tr:hover {
+  transform: scale(1.01);
+}
+
+.report-card {
+  padding: 14px;
+  border-radius: 12px;
+
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(0, 247, 255, 0.15);
+
+  text-align: center;
+  transition: 0.3s;
+}
+
+.report-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 20px rgba(0, 247, 255, 0.15);
+}
+
+.report-card p {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.crypto-summary div {
+  padding: 6px 10px;
+  border-radius: 8px;
+
+  background: rgba(0, 247, 255, 0.05);
+  border: 1px solid rgba(0, 247, 255, 0.1);
+}
+
+.loading-row {
+  height: 20px;
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.05),
+    rgba(255,255,255,0.1),
+    rgba(255,255,255,0.05)
+  );
+  animation: shimmer 1.2s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200px 0; }
+  100% { background-position: 200px 0; }
+}
+
+.top-coin {
+  background: rgba(0, 247, 255, 0.05);
+  border-left: 3px solid #00f7ff;
+}
+
+@media (max-width: 768px) {
+  .crypto-container {
+    flex-direction: column;
+  }
+
+  .crypto-report {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,116 @@
+.hero {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  height: 100dvh; /* 🔥 fixes mobile browser UI jump */
+  overflow: hidden;
+  background: #020617;
+}
+
+/* 🔥 CANVAS */
+#heroCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;     /* ✅ FIX */
+  height: 100%;    /* ✅ FIX */
+  z-index: 1;
+}
+
+/* 🔥 SVG TEXT */
+#stickSVG {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(95vw, 1200px); /* 🔥 responsive scaling */
+  height: auto;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+
+  stroke: #00f7ff;
+  stroke-width: 2;
+  fill: none;
+}
+
+/* 🔥 GLOW */
+#stickSVG.glow {
+  filter: drop-shadow(0 0 12px #00f7ff)
+          drop-shadow(0 0 24px #00f7ff);
+}
+
+/* 🔥 BUTTONS */
+.hero-actions {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+
+  display: flex;
+  gap: 20px;
+}
+
+/* 🔥 BUTTON STYLES */
+.btn-primary,
+.btn-secondary {
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn-primary {
+  background: #00f7ff;
+  color: #020617;
+}
+
+.btn-primary:hover {
+  background: #00c6cc;
+}
+
+.btn-secondary {
+  border: 1px solid #00f7ff;
+  color: #00f7ff;
+}
+
+.btn-secondary:hover {
+  background: rgba(0, 247, 255, 0.1);
+}
+
+/* ========================================= */
+/* 📱 MOBILE RESPONSIVENESS */
+/* ========================================= */
+
+@media (max-width: 768px) {
+
+  #stickSVG {
+    width: 95vw;      /* full width on mobile */
+    top: 45%;         /* 🔥 shift up for balance */
+  }
+
+  .hero-actions {
+    bottom: 40px;     /* less cramped */
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    padding: 10px 18px;
+    font-size: 14px;
+  }
+}
+
+/* 🔥 SHORT SCREEN FIX (landscape phones etc) */
+@media (max-height: 700px) {
+
+  #stickSVG {
+    top: 42%;
+  }
+
+  .hero-actions {
+    bottom: 20px;
+  }
+}

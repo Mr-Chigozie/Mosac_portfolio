@@ -1,0 +1,199 @@
+/* SECTION */
+#paint {
+    position: relative;
+    padding: 120px 20px;
+}
+
+/* CONTAINER */
+.paint-container {
+    max-width: 1100px;
+    margin: auto;
+
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;;
+}
+
+.app-panel,
+.paint-app {
+    flex: 1;
+
+    padding: 30px;
+    border-radius: 16px;
+
+    background: rgba(20, 25, 45, 0.6);
+    backdrop-filter: blur(12px);
+
+    border: 1px solid rgba(0, 247, 255, 0.15);
+
+    box-shadow:
+        0 10px 40px rgba(0, 0, 0, 0.4),
+        inset 0 0 30px rgba(0, 247, 255, 0.05);
+
+    position: relative;
+    overflow: hidden;
+}
+
+/* glow */
+.app-panel::before,
+.paint-app::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background: linear-gradient(120deg,
+            transparent,
+            rgba(0, 247, 255, 0.08),
+            transparent);
+
+    pointer-events: none;
+}
+
+.paint-app {
+    display: flex;
+    gap: 20px;
+}
+
+/* LEFT TOOL PANEL */
+.controls {
+    width: 160px;
+    flex-shrink: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    font-size: 13px;
+}
+
+/* RIGHT CANVAS AREA */
+.canvas-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.controls h3 {
+    color: #00f7ff;
+    margin-bottom: 10px;
+}
+
+.controls label {
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.controls select,
+.controls input {
+    width: 100%;
+    padding: 6px;
+    border-radius: 6px;
+
+    border: 1px solid rgba(0, 247, 255, 0.3);
+    background: transparent;
+    color: #e2e8f0;
+}
+
+/* buttons */
+.controls button {
+    padding: 8px;
+    border-radius: 8px;
+
+    border: 1px solid #00f7ff;
+    background: transparent;
+    color: #00f7ff;
+
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.controls button:hover {
+    background: #00f7ff;
+    color: #020617;
+}
+
+.stamp-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+}
+
+.stamp {
+    padding: 6px;
+    text-align: center;
+    cursor: pointer;
+
+    border-radius: 6px;
+    border: 1px solid rgba(0, 247, 255, 0.2);
+
+    transition: 0.2s;
+}
+
+.stamp:hover {
+    background: rgba(0, 247, 255, 0.1);
+}
+
+.stamp.active {
+    border-color: #00f7ff;
+    background: rgba(0, 247, 255, 0.15);
+}
+
+.canvas-container {
+    flex: 1;
+}
+
+#paintCanvas {
+    width: 100%;
+    height: 400px;
+
+    background: #ffffff;
+    border-radius: 12px;
+
+    border: 1px solid rgba(0, 247, 255, 0.2);
+
+    box-shadow:
+        0 0 20px rgba(0, 247, 255, 0.2),
+        inset 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.saved-gallery {
+    padding: 10px;
+    border-radius: 10px;
+
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(0, 247, 255, 0.1);
+}
+
+.saved-gallery h4 {
+    color: #00f7ff;
+    /* FIXED */
+    margin-bottom: 10px;
+}
+
+#gallery {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+#gallery img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+@media (max-width: 768px) {
+    .paint-container {
+        flex-direction: column;
+    }
+
+    .paint-app {
+        flex-direction: column;
+    }
+
+    .controls {
+        width: 100%;
+    }
+}

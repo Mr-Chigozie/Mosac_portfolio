@@ -1,0 +1,88 @@
+/* FOOTER */
+#footer {
+  position: relative;
+  padding: 80px 20px 30px;
+
+  background: rgba(20, 25, 45, 0.6);
+  backdrop-filter: blur(12px);
+
+  border-top: 1px solid rgba(0, 247, 255, 0.15);
+}
+
+/* CONTAINER */
+.footer-container {
+  max-width: 1100px;
+  margin: auto;
+
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+/* SECTIONS */
+.footer-left,
+.footer-links,
+.footer-socials {
+  flex: 1;
+}
+
+/* HEADINGS */
+#footer h3 {
+  color: #00f7ff;
+  margin-bottom: 10px;
+}
+
+#footer h4 {
+  color: #00f7ff;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+/* TEXT */
+#footer p {
+  font-size: 13px;
+  opacity: 0.8;
+  line-height: 1.6;
+}
+
+/* LINKS */
+.footer-links a,
+.footer-socials a {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 6px;
+
+  color: #e2e8f0;
+  text-decoration: none;
+
+  transition: 0.3s;
+}
+
+.footer-links a:hover,
+.footer-socials a:hover {
+  color: #00f7ff;
+  transform: translateX(3px);
+}
+
+/* BOTTOM */
+.footer-bottom {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 12px;
+  opacity: 0.6;
+}
+
+/* GLOW EFFECT */
+#footer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: radial-gradient(
+    circle at 50% 0%,
+    rgba(0, 247, 255, 0.08),
+    transparent 60%
+  );
+
+  pointer-events: none;
+}

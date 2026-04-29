@@ -5,10 +5,26 @@
   <meta charset="UTF-8">
   <title>My Portfolio</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="nav.css">
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="hero.css">
+  <link rel="stylesheet" href="about.css">
+  <link rel="stylesheet" href="skills.css">
+  <link rel="stylesheet" href="projects.css">
+  <link rel="stylesheet" href="game.css">
+  <link rel="stylesheet" href="weather.css">
+  <link rel="stylesheet" href="crypto.css">
+  <link rel="stylesheet" href="paint.css">
+  <link rel="stylesheet" href="live.css">
+    <link rel="stylesheet" href="footer.css">
+
+
+
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
-  <canvas id="bgCanvas"></canvas>
+
   <!-- Navbar -->
   <header>
 
@@ -88,7 +104,12 @@
         </svg>
       </div>
 
-      <ul>
+      <!-- 🔥 hamburger -->
+      <div class="menu-toggle" id="menuToggle">≡</div>
+
+
+
+      <ul id="navLinks" class="nav-links">
         <li><a href="#about">About</a></li>
         <li><a href="#skills">Skills</a></li>
         <li><a href="#projects">Projects</a></li>
@@ -96,97 +117,20 @@
       </ul>
     </nav>
   </header>
+
   <main>
+    <canvas id="bgCanvas"></canvas>
     <!-- Hero Section -->
     <section class="hero" id="hero">
       <canvas id="heroCanvas"></canvas>
 
-      <svg id="stickSVG" width="1600" height="500" viewBox="0 0 1600 500" stroke="#00f7ff" stroke-width="4" fill="none">
+      <svg id="stickSVG" viewBox="0 0 1600 500"></svg>
 
-      </svg>
+      <div class="hero-actions">
+        <a href="#projects" class="btn-primary">View Projects</a>
+        <a href="#contact" class="btn-secondary">Contact</a>
+      </div>
 
-      <svg id="neonTriangle" width="400" height="400" viewBox="0 0 400 400">
-
-        <defs>
-
-          <linearGradient id="triGlow" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#00ffff" />
-            <stop offset="50%" stop-color="#00aaff" />
-            <stop offset="100%" stop-color="#0077ff" />
-          </linearGradient>
-
-          <filter id="neonBlur">
-            <feGaussianBlur stdDeviation="4" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-
-        </defs>
-
-        <!-- back triangle -->
-        <polygon points="200,50 70,330 350,330" stroke="#002244" stroke-width="2" fill="none" />
-
-        <!-- front neon triangle -->
-        <polygon points="200,40 60,320 340,320" stroke="url(#triGlow)" stroke-width="4" fill="none"
-          filter="url(#neonBlur)" />
-
-      </svg>
-
-      <svg id="neonSquare" width="300" height="300" viewBox="0 0 300 300">
-
-        <defs>
-
-          <linearGradient id="squareGlow" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#00ffff" />
-            <stop offset="50%" stop-color="#00aaff" />
-            <stop offset="100%" stop-color="#0077ff" />
-          </linearGradient>
-
-          <filter id="squareBlur">
-            <feGaussianBlur stdDeviation="4" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-
-        </defs>
-
-        <!-- back square -->
-        <rect x="40" y="40" width="200" height="200" stroke="#002244" stroke-width="2" fill="none" />
-
-        <!-- front neon square -->
-        <rect x="30" y="30" width="200" height="200" stroke="url(#squareGlow)" stroke-width="4"
-          fill="rgba(0,255,255,0.08)" filter="url(#squareBlur)" />
-
-      </svg>
-
-      <svg id="neonCircle" viewBox="0 0 200 200">
-
-        <defs>
-
-          <radialGradient id="circleGlow">
-            <stop offset="0%" stop-color="#00ffff" />
-            <stop offset="70%" stop-color="#0088ff" />
-            <stop offset="100%" stop-color="#002244" />
-          </radialGradient>
-
-          <filter id="circleBlur">
-            <feGaussianBlur stdDeviation="4" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-
-        </defs>
-
-        <circle cx="100" cy="100" r="70" stroke="url(#circleGlow)" stroke-width="4" fill="rgba(0,255,255,0.08)"
-          filter="url(#circleBlur)" />
-
-      </svg>
 
 
 
@@ -195,197 +139,87 @@
     <!-- About -->
     <section id="about">
 
-
       <div class="about-panel">
+
         <h2>About Me</h2>
+        <p class="about-subtitle">
+          Building interactive systems, tools, and experiences on the web.
+        </p>
+
         <div class="about-container">
 
+          <!-- LEFT -->
           <div class="about-left">
 
+            <!-- Tabs -->
             <div class="about-tabs">
-
               <button class="active" data-tab="bio">Bio</button>
               <button data-tab="professional">Professional</button>
               <button data-tab="hobbies">Hobbies</button>
-
             </div>
 
+            <!-- Content -->
             <div class="about-text">
 
-              <div class="tab active" id="bio">
-                <svg class="tab-bg-svg" viewBox="0 0 600 200">
-
-                  <polygon points="100,40 110,70 140,70 115,90 125,120 100,100 75,120 85,90 60,70 90,70" />
-
-                  <polygon points="300,20 310,50 340,50 315,70 325,100 300,80 275,100 285,70 260,50 290,50" />
-
-                  <polygon points="500,60 510,90 540,90 515,110 525,140 500,120 475,140 485,110 460,90 490,90" />
-
-                </svg>
-
-                <p>
-                  I build modern web applications and systems from scratch,
-                  focused on scalable architecture and interactive UI.
-                </p>
-
+              <div class="tab active" data-tab-content="bio">
+                <div class="tab-content-inner"></div>
               </div>
 
-
-              <div class="tab" id="professional">
-
-                <svg class="tab-bg-svg" viewBox="0 0 600 200">
-
-                  <line x1="0" y1="100" x2="600" y2="100" />
-                  <line x1="100" y1="0" x2="100" y2="200" />
-                  <line x1="300" y1="0" x2="300" y2="200" />
-                  <line x1="500" y1="0" x2="500" y2="200" />
-
-                </svg>
-
-                <p>
-                  Full-stack developer working with React, Node, Express,
-                  and modern JavaScript architecture.
-                </p>
-
+              <div class="tab" data-tab-content="professional">
+                <div class="tab-content-inner"></div>
               </div>
 
-
-              <div class="tab" id="hobbies">
-
-                <svg class="tab-bg-svg" viewBox="0 0 600 200">
-
-                  <polygon points="100,150 200,20 300,150" />
-                  <polygon points="350,150 450,20 550,150" />
-
-                </svg>
-
-                <p>
-                  I enjoy exploring new technologies, UI design systems,
-                  and building experimental projects.
-                </p>
-
+              <div class="tab" data-tab-content="hobbies">
+                <div class="tab-content-inner"></div>
               </div>
 
             </div>
 
           </div>
 
+          <!-- RIGHT -->
           <div class="about-image">
-
             <div class="about-sprite" id="aboutSprite"></div>
-
           </div>
 
         </div>
-      </div>
 
+      </div>
 
     </section>
 
     <!-- Skills -->
-    <section id="skills">
+    <section id="skills" class="fade-in">
 
-      <h2>Skills</h2>
+      <div class="skills-panel">
+        <h2>Skills</h2>
 
-      <div class="skills-accordion">
-
-        <!-- Frontend -->
-        <div class="skill-category">
-
-          <button class="skill-header">
-            Frontend Development
-            <span class="arrow">▼</span>
-          </button>
-
-          <div class="skill-content">
-
-            <div class="skill-row">
-              <span>HTML</span>
-              <span class="tier tier-s">S</span>
-            </div>
-
-            <div class="skill-row">
-              <span>CSS</span>
-              <span class="tier tier-a">A</span>
-            </div>
-
-            <div class="skill-row">
-              <span>React</span>
-              <span class="tier tier-a">A</span>
-            </div>
-
-            <div class="skill-row">
-              <span>JavaScript</span>
-              <span class="tier tier-s">S</span>
-            </div>
-
-          </div>
-
+        <div class="skills-accordion" id="skillsContainer">
+          <!-- injected via JS -->
         </div>
 
-
-        <!-- Backend -->
-        <div class="skill-category">
-
-          <button class="skill-header">
-            Backend Development
-          </button>
-
-          <div class="skill-content">
-
-            <div class="skill-row">
-              <span>Node.js</span>
-              <span class="tier tier-a">A</span>
-            </div>
-
-            <div class="skill-row">
-              <span>Express</span>
-              <span class="tier tier-a">A</span>
-            </div>
-
-          </div>
-
-        </div>
+      </div>
 
 
-        <!-- Database -->
-        <div class="skill-category">
 
-          <button class="skill-header">
-            Databases
-          </button>
+    </section>
 
-          <div class="skill-content">
 
-            <div class="skill-row">
-              <span>MongoDB</span>
-              <span class="tier tier-b">B</span>
-            </div>
+    <!-- Projects -->
+    <section id="projects" class="fade-in">
 
-            <div class="skill-row">
-              <span>MySQL</span>
-              <span class="tier tier-a">A</span>
-            </div>
+      <div class="projects-panel">
 
-          </div>
+        <h2>Projects</h2>
 
+        <div class="projects-grid" id="projectsContainer">
+          <!-- injected via JS -->
         </div>
 
       </div>
 
     </section>
 
-
-
-    <!-- <section id="game">
-
-      <div class="game-panel">
-
-        <h2>Mini World</h2>
-        <canvas id="gameCanvas" tabindex="0"></canvas>
-      </div>
-
-    </section> -->
 
 
 
@@ -401,12 +235,12 @@
           The game features real-time movement, collision detection, scoring, and dynamic enemy spawning.
         </p>
 
-        <p>
+        <p class="controls">
           <strong>Controls:</strong><br>
-          Arrow Keys – Move<br>
-          Space – Jump<br>
-          F – Shoot<br>
-          R – Restart (after game over)
+          <span>Arrow Keys – Move</span>
+          <span>Space – Jump</span>
+          <span>F – Shoot</span>
+          <span>R – Restart</span>
         </p>
 
         <p>
@@ -430,21 +264,7 @@
 
 
 
-    <!-- Projects -->
-    <section id="projects">
-      <h2>Projects</h2>
 
-      <div class="project-card">
-        <h3>Room Listing App</h3>
-        <p>A platform for listing and filtering rooms.</p>
-      </div>
-
-      <div class="project-card">
-        <h3>Memo Approval System</h3>
-        <p>A role-based memo approval system.</p>
-      </div>
-
-    </section>
 
 
     <!-- 🔥 NEW WRAPPER -->
@@ -845,14 +665,57 @@
 
     </section>
 
+   
+
   </main>
+  <footer id="footer">
+
+  <div class="footer-container">
+
+    <!-- LEFT -->
+    <div class="footer-left">
+      <h3>Chigozie Ofodile</h3>
+      <p>Software Engineer building scalable systems and interactive web applications.</p>
+    </div>
+
+    <!-- CENTER -->
+    <div class="footer-links">
+      <h4>Navigation</h4>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="footer-socials">
+      <h4>Connect</h4>
+      <a href="#">GitHub</a>
+      <a href="#">LinkedIn</a>
+      <a href="#">Email</a>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    © 2026 Chigozie Ofodile — Built with code & creativity
+  </div>
+
+</footer>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <script src="script.js"></script>
+  <script src="about.js"></script>
+  <script src="nav.js"></script>
   <script src="game.js"></script>
   <script src="weather.js"></script>
   <script src="crypto.js"></script>
   <script src="liveScore.js"></script>
   <script src="paintApp.js"></script>
+  <script src="main.js"></script>
+  <script src="hero.js"></script>
+  <script src="skills.js"></script>
+  <script src="projects.js"></script>
 </body>
 
 </html>
