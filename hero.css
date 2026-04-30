@@ -1,34 +1,38 @@
 .hero {
   position: relative;
   width: 100%;
-  min-height: 100vh;
-  height: 100dvh; /* 🔥 fixes mobile browser UI jump */
+  height: 100svh; /* ✅ stable viewport (NOT dvh) */
   overflow: hidden;
-  background: #020617;
+  background: transparent;
+}
+
+/* prevent horizontal scroll */
+html, body {
+  overflow-x: hidden;
 }
 
 /* 🔥 CANVAS */
 #heroCanvas {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;     /* ✅ FIX */
-  height: 100%;    /* ✅ FIX */
+  inset: 0; /* cleaner than top/left */
+  width: 100%;
+  height: 100%;
   z-index: 1;
 }
 
 /* 🔥 SVG TEXT */
 #stickSVG {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: min(95vw, 1200px); /* 🔥 responsive scaling */
+  inset: 0;
+  margin: auto; /* ✅ true centering */
+
+  width: min(95vw, 1200px);
   height: auto;
-  transform: translate(-50%, -50%);
+
   pointer-events: none;
 
   stroke: #00f7ff;
-  stroke-width: 2;
+  stroke-width: 3;
   fill: none;
 }
 
@@ -38,16 +42,20 @@
           drop-shadow(0 0 24px #00f7ff);
 }
 
-/* 🔥 BUTTONS */
+/* 🔥 BUTTONS (merged + responsive) */
 .hero-actions {
   position: absolute;
-  bottom: 80px;
+  bottom: clamp(20px, 8vh, 80px); /* ✅ adaptive */
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
 
   display: flex;
   gap: 20px;
+
+  padding: 0 16px;
+  width: 100%;
+  max-width: 400px;
 }
 
 /* 🔥 BUTTON STYLES */
@@ -79,18 +87,17 @@
 }
 
 /* ========================================= */
-/* 📱 MOBILE RESPONSIVENESS */
+/* 📱 MOBILE */
 /* ========================================= */
 
 @media (max-width: 768px) {
 
   #stickSVG {
-    width: 95vw;      /* full width on mobile */
-    top: 45%;         /* 🔥 shift up for balance */
+    width: 95vw;
   }
 
   .hero-actions {
-    bottom: 40px;     /* less cramped */
+    bottom: 40px;
     flex-direction: column;
     gap: 12px;
     align-items: center;
@@ -103,14 +110,10 @@
   }
 }
 
-/* 🔥 SHORT SCREEN FIX (landscape phones etc) */
+/* 🔥 SHORT SCREENS */
 @media (max-height: 700px) {
 
-  #stickSVG {
-    top: 42%;
-  }
-
   .hero-actions {
-    bottom: 20px;
+    bottom: 16px;
   }
 }

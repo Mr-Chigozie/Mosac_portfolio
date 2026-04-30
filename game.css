@@ -66,8 +66,8 @@
   margin: 30px auto 0;
 
   width: 100%;
-  max-width: 700px;
-  height: 400px;
+  max-width: 900px;   /* 🔥 wider */
+  height: 480px;
 
   background: #020617;
   border-radius: 12px;

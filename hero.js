@@ -8,9 +8,9 @@
   let lines = []
   let assembleSpeed = 0.1
   let targetSpeed = 0.1
+  const actions = document.querySelector(".hero-actions")
 
-  const planetSprite = new Image()
-  planetSprite.src = "images/planets.png" // adjust path if needed
+
 
 
 
@@ -34,8 +34,16 @@
 
   // 🔥 CANVAS SETUP
   function resizeCanvas() {
-    canvas.width = window.innerWidth
-    canvas.height = window.innerHeight
+    const rect = hero.getBoundingClientRect()
+    const dpr = window.devicePixelRatio || 1
+
+    canvas.width = rect.width * dpr
+    canvas.height = rect.height * dpr
+
+    canvas.style.width = rect.width + "px"
+    canvas.style.height = rect.height + "px"
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
   }
 
   resizeCanvas()
@@ -44,32 +52,6 @@
 
 
 
-  // 🔥 STARS
-  class Star {
-    constructor() {
-      this.reset()
-    }
-
-    reset() {
-      this.x = Math.random() * canvas.width
-      this.y = Math.random() * canvas.height
-      this.size = Math.random() * 2
-      this.speed = 0.2 + Math.random() * 0.5
-    }
-
-    update() {
-      this.y += this.speed
-      if (this.y > canvas.height) this.reset()
-    }
-
-    draw() {
-      ctx.fillStyle = "#ffffff"
-      ctx.fillRect(this.x, this.y, this.size, this.size)
-    }
-  }
-
-  const stars = Array.from({ length: isMobile ? 40 : 120 }, () => new Star());
-
 
   const SPRITE_COLS = 4
   const SPRITE_ROWS = 4
@@ -77,152 +59,7 @@
   const SPRITE_W = 256   // adjust if needed
   const SPRITE_H = 256
 
-class OrbitPlanet {
-  constructor(angle, radius, size) {
 
-    this.angle = angle
-    this.radius = radius
-
-    // 🔥 controlled depth (visual only)
-    this.depth = Math.random()
-    this.size = size * (0.8 + this.depth * 0.4)
-
-    this.mode = "scatter"
-
-    this.x = Math.random() * canvas.width
-    this.y = Math.random() * canvas.height
-
-    this.vx = 0
-    this.vy = 0
-
-    // 🔥 controlled speed (keeps orbit uniform)
-    this.speed = 0.01 * (0.85 + this.depth * 0.3)
-
-    // sprite
-    this.spriteIndex = Math.floor(Math.random() * 16)
-    this.spriteX = this.spriteIndex % SPRITE_COLS
-    this.spriteY = Math.floor(this.spriteIndex / SPRITE_COLS)
-  }
-
-  update() {
-
-    // 🔥 SIDE ORBIT POSITION
-    const offsetX = isMobile ? 0 : 280
-    const offsetY = isMobile ? -120 : -40
-
-    this.centerX = canvas.width / 2 + offsetX
-    this.centerY = canvas.height / 2 + offsetY
-
-    // 🟢 ORBIT (FIXED — NO LERP)
-    if (this.mode === "orbit") {
-      this.angle += this.speed
-
-const aspect = canvas.width / canvas.height
-
-this.x = this.centerX + Math.cos(this.angle) * this.radius * aspect
-this.y = this.centerY + Math.sin(this.angle) * this.radius
-    }
-
-    // 🔴 SCATTER
-    else if (this.mode === "scatter") {
-
-      this.x += this.vx
-      this.y += this.vy
-
-      if (!isMobile) {
-        this.vx += (Math.random() - 0.5) * 0.04
-        this.vy += (Math.random() - 0.5) * 0.04
-      }
-
-      if (this.x < 0 || this.x > canvas.width) this.vx *= -1
-      if (this.y < 0 || this.y > canvas.height) this.vy *= -1
-
-      this.vx *= 0.995
-      this.vy *= 0.995
-    }
-  }
-
-  draw() {
-
-    ctx.save()
-
-    // 🔥 clean circular mask
-    ctx.beginPath()
-    ctx.arc(this.x, this.y, this.size / 2, 0, Math.PI * 2)
-    ctx.closePath()
-    ctx.clip()
-
-    const pad = 1.5
-
-    ctx.drawImage(
-      planetSprite,
-      this.spriteX * SPRITE_W,
-      this.spriteY * SPRITE_H,
-      SPRITE_W,
-      SPRITE_H,
-      this.x - this.size / 2 + pad,
-      this.y - this.size / 2 + pad,
-      this.size - pad * 2,
-      this.size - pad * 2
-    )
-
-    ctx.restore()
-
-    // 🔥 soft shading
-    ctx.save()
-
-    const gradient = ctx.createRadialGradient(
-      this.x, this.y, this.size * 0.2,
-      this.x, this.y, this.size / 2
-    )
-
-    gradient.addColorStop(0, "rgba(0,0,0,0)")
-    gradient.addColorStop(1, "rgba(0,0,0,0.3)")
-
-    ctx.fillStyle = gradient
-    ctx.beginPath()
-    ctx.arc(this.x, this.y, this.size / 2, 0, Math.PI * 2)
-    ctx.fill()
-
-    ctx.restore()
-  }
-
-  orbit() {
-    this.mode = "orbit"
-    this.vx = 0
-    this.vy = 0
-  }
-
-  scatter() {
-    this.mode = "scatter"
-
-    this.x = Math.random() * canvas.width
-    this.y = Math.random() * canvas.height
-
-    this.vx = (Math.random() - 0.5) * 4
-    this.vy = (Math.random() - 0.5) * 4
-  }
-}
- const total = isMobile ? 4 : 8
-
-let orbitPlanets = []
-
-for (let i = 0; i < total; i++) {
-
-  const angle = (i / total) * Math.PI * 2
-
-  // 🔥 clean 2-ring layout
-  const ring = i % 2 === 0 ? 0 : 1
-  const radius = (isMobile ? 140 : 220) + ring * 50
-
-  orbitPlanets.push(
-    new OrbitPlanet(
-      angle,
-      radius,
-      (isMobile ? 35 : 60)
-    )
-  )
-}
 
 
   const skills = isMobile
@@ -239,7 +76,7 @@ for (let i = 0; i < total; i++) {
       this.tx = this.x
       this.ty = this.y
 
-      this.mode = "orbit"
+      this.mode = "scatter"
 
       this.orbitCenterX = canvas.width / 2
       this.orbitCenterY = canvas.height / 2
@@ -249,7 +86,13 @@ for (let i = 0; i < total; i++) {
       this.speed = 0.01 + Math.random() * 0.02
 
       this.alignX = canvas.width / 2 - (skills.length * 120) / 2 + i * 120
-      this.alignY = canvas.height / 2 + 200
+      const rect = actions.getBoundingClientRect()
+      const heroRect = hero.getBoundingClientRect()
+
+      // convert DOM → canvas space
+      const buttonTop = rect.top - heroRect.top
+
+      this.alignY = buttonTop - 40   // 🔥 40px gap above buttons
 
       this.vx = 0
       this.vy = 0
@@ -309,11 +152,17 @@ for (let i = 0; i < total; i++) {
       ctx.shadowBlur = 0
     }
 
+
     align() {
       this.mode = "align"
 
+      const rect = actions.getBoundingClientRect()
+      const heroRect = hero.getBoundingClientRect()
+
+      const buttonTop = rect.top - heroRect.top
+
       this.tx = this.alignX
-      this.ty = this.alignY
+      this.ty = buttonTop - (isMobile ? 50 : 70) // 🔥 safe gap
 
       this.vx = 0
       this.vy = 0
@@ -346,17 +195,11 @@ for (let i = 0; i < total; i++) {
   function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-    stars.forEach(s => {
-      s.update()
-      s.draw()
-    })
 
 
 
-    orbitPlanets.forEach(p => {
-      p.update()
-      p.draw()
-    })
+
+
 
     skillParticles.forEach(p => {
       p.update()
@@ -573,6 +416,7 @@ for (let i = 0; i < total; i++) {
 
           vx: 0,
           vy: 0,
+          wanderFactor: 0.5 + Math.random(), // 🔥 ADD THIS
           drifting: false
         }
 
@@ -586,48 +430,62 @@ for (let i = 0; i < total; i++) {
     })
   }
   // 🔥 ANIMATE LINES
+
   function animateLines() {
 
-    // 🔥 smooth speed ramp (IMPORTANT)
-    assembleSpeed += (targetSpeed - assembleSpeed) * 0.2
+    // 🔥 ONLY decay speed when assembling
+    if (!lines[0]?.drifting) {
+      assembleSpeed *= 0.9
+      assembleSpeed = Math.max(assembleSpeed, targetSpeed)
+    }
 
     lines.forEach(l => {
 
-      // 🔴 SCATTER MODE
+      // 🔴 SCATTER MODE (WANDERING SYSTEM)
+      // 🔴 SCATTER MODE (WANDERING SYSTEM)
       if (l.drifting) {
 
-        // 🔥 ease OUT (faster start, slower end)
-        const ease = 0.12 + assembleSpeed * 0.5
-
-        l.cx1 += (l.tx1 - l.cx1) * ease
-        l.cy1 += (l.ty1 - l.cy1) * ease
-        l.cx2 += (l.tx2 - l.cx2) * ease
-        l.cy2 += (l.ty2 - l.cy2) * ease
-
-        // drift
+        // movement
         l.cx1 += l.vx
         l.cy1 += l.vy
         l.cx2 += l.vx
         l.cy2 += l.vy
 
-        if (!isMobile) {
-          l.vx += (Math.random() - 0.5) * 0.08
-          l.vy += (Math.random() - 0.5) * 0.08
-        }
+        // 🔥 per-line variation
+        const base = isMobile ? 0.03 : 0.08
+        const wanderStrength = base * (l.wanderFactor || 1)
 
-        l.vx *= 0.96
-        l.vy *= 0.96
+        l.vx += (Math.random() - 0.5) * wanderStrength
+        l.vy += (Math.random() - 0.5) * wanderStrength
+
+        // 🔥 REMOVE center pull ❌
+        const midX = (l.cx1 + l.cx2) / 2
+        const midY = (l.cy1 + l.cy2) / 2
+
+        // 🔥 soft damping
+        l.vx *= 0.99
+        l.vy *= 0.99
+
+        // 🔥 clamp speed
+        const maxSpeed = 2.5
+        l.vx = Math.max(-maxSpeed, Math.min(maxSpeed, l.vx))
+        l.vy = Math.max(-maxSpeed, Math.min(maxSpeed, l.vy))
+
+        // 🔥 edge containment (replaces center gravity)
+        const margin = 100
+
+        if (midX < margin) l.vx += 0.2
+        if (midX > 1600 - margin) l.vx -= 0.2
+
+        if (midY < margin) l.vy += 0.2
+        if (midY > 500 - margin) l.vy -= 0.2
       }
 
       // 🟢 ASSEMBLE MODE
       else {
 
-        let mx = (l.cx1 + l.cx2) / 2
-        let my = (l.cy1 + l.cy2) / 2
-
         if (!isMobile) {
 
-          // 🔥 convert mouse to SVG space
           const rect = svg.getBoundingClientRect()
 
           const scaleX = 1600 / rect.width
@@ -636,18 +494,18 @@ for (let i = 0; i < total; i++) {
           const mouseX = (mouse.x - rect.left) * scaleX
           const mouseY = (mouse.y - rect.top) * scaleY
 
-          let mx = (l.cx1 + l.cx2) / 2
-          let my = (l.cy1 + l.cy2) / 2
+          const mx = (l.cx1 + l.cx2) / 2
+          const my = (l.cy1 + l.cy2) / 2
 
           let dx = mx - mouseX
           let dy = my - mouseY
           let dist = dx * dx + dy * dy
 
-          let forceRadius = 120 * 120
+          const forceRadius = 120 * 120
 
           if (dist < forceRadius) {
-            let angle = Math.atan2(dy, dx)
-            let push = (120 - Math.sqrt(dist)) * 0.25
+            const angle = Math.atan2(dy, dx)
+            const push = (120 - Math.sqrt(dist)) * 0.25
 
             l.cx1 += Math.cos(angle) * push
             l.cy1 += Math.sin(angle) * push
@@ -655,8 +513,9 @@ for (let i = 0; i < total; i++) {
             l.cy2 += Math.sin(angle) * push
           }
         }
-        // 🔥 ease IN (slower start → snap finish)
-        const ease = assembleSpeed
+
+        // easing
+        const ease = Math.pow(assembleSpeed, 1.5)
 
         l.cx1 += (l.tx1 - l.cx1) * ease
         l.cy1 += (l.ty1 - l.cy1) * ease
@@ -677,58 +536,44 @@ for (let i = 0; i < total; i++) {
 
   animateLines()
 
-  // 🔥 ACTIONS
-  // function assembleText() {
 
-  //   letters.forEach(letter => {
-
-  //     setTimeout(() => {
-
-  //       letter.lines.forEach(l => {
-  //         l.tx1 = l.x1
-  //         l.ty1 = l.y1
-  //         l.tx2 = l.x2
-  //         l.ty2 = l.y2
-  //       })
-
-  //     }, letter.delay)
-
-  //   })
-
-  // }
 
 
   function assembleText() {
     lines.forEach(l => {
-      l.drifting = false   // 🔥 kill scatter instantly
+      l.drifting = false
       l.vx = 0
       l.vy = 0
+
+      // 🔥 set targets immediately
+      l.tx1 = l.x1
+      l.ty1 = l.y1
+      l.tx2 = l.x2
+      l.ty2 = l.y2
     })
 
-    letters.forEach(letter => {
-      setTimeout(() => {
-        letter.lines.forEach(l => {
-          l.tx1 = l.x1
-          l.ty1 = l.y1
-          l.tx2 = l.x2
-          l.ty2 = l.y2
-        })
-      }, letter.delay)
-    })
+    assembleSpeed = 0.7
+    targetSpeed = 0.06
   }
-
 
   function scatterText() {
     lines.forEach(l => {
 
-      // ✅ USE SVG SPACE ONLY
+      // 🔥 break instantly from current position
+      l.cx1 += (Math.random() - 0.5) * 200
+      l.cy1 += (Math.random() - 0.5) * 200
+      l.cx2 += (Math.random() - 0.5) * 200
+      l.cy2 += (Math.random() - 0.5) * 200
+
+      // 🔥 new random targets
       l.tx1 = Math.random() * 1600
       l.ty1 = Math.random() * 500
       l.tx2 = Math.random() * 1600
       l.ty2 = Math.random() * 500
 
-      l.vx = (Math.random() - 0.5) * 5
-      l.vy = (Math.random() - 0.5) * 5
+      // 🔥 strong burst velocity
+      l.vx = (Math.random() - 0.5) * 4
+      l.vy = (Math.random() - 0.5) * 4
 
       l.drifting = true
     })
@@ -744,12 +589,12 @@ for (let i = 0; i < total; i++) {
 
       if (active) {
         assembleText()
-        orbitPlanets.forEach(p => p.orbit())
+
         skillParticles.forEach(p => p.align())
         svg.classList.add("glow")
       } else {
         scatterText()
-        orbitPlanets.forEach(p => p.scatter())
+
         skillParticles.forEach(p => p.scatter())
         svg.classList.remove("glow")
       }
@@ -764,7 +609,7 @@ for (let i = 0; i < total; i++) {
       assembleText()
       targetSpeed = 0.28
       assembleSpeed = 0.25
-      orbitPlanets.forEach(p => p.orbit())
+
       skillParticles.forEach(p => p.align())
       svg.classList.add("glow")
     })
@@ -773,15 +618,15 @@ for (let i = 0; i < total; i++) {
 
 
       scatterText()
-      targetSpeed = 0.06
-      orbitPlanets.forEach(p => p.scatter())
+      targetSpeed = 0.016
+
       skillParticles.forEach(p => p.scatter())
       svg.classList.remove("glow")
     })
 
   }
 
-  const centerY = 250  // middle of 500 viewBox
+  const centerY = 210  // middle of 500 viewBox
 
   drawStickText("CHIGOZIE OZO OFODILE", centerY - 120)
   drawStickText("FULL-STACK DEVELOPER", centerY)
@@ -789,8 +634,7 @@ for (let i = 0; i < total; i++) {
   scatterText()
 
   setTimeout(() => {
-    assembleText()
-    svg.classList.add("glow")
+    scatterText()
   }, 2000)
 
 })();
