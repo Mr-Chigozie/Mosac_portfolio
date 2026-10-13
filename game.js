@@ -1,3 +1,10 @@
+// Disable automatic browser scroll restoration on refresh
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+// Force the window to stay at the top on a fresh load/reload
+window.scrollTo(0, 0);
+
 console.log("GAME JS LOADED");
 let gameStarted = false;
 let monsters = [];
@@ -30,7 +37,7 @@ gameCanvas.setAttribute("tabindex", "0");
 // ==========================
 gameCanvas.addEventListener("mouseenter", () => {
   document.body.classList.add("no-scroll");
-  gameCanvas.focus(); // 🔥 important
+  gameCanvas.focus({ preventScroll: true });
 });
 
 gameCanvas.addEventListener("mouseleave", () => {
@@ -38,9 +45,14 @@ gameCanvas.addEventListener("mouseleave", () => {
 });
 
 window.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") {
+  if (["Space", " ", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Enter"].includes(e.key)) {
+    e.preventDefault(); // 🔥 Prevent default page jump globally for game inputs
+  }
+
+  if (e.key === "Enter" && !gameStarted) {
     gameStarted = true;
-    baseY = gameCanvas.height / 2; // 🔥 reset position
+    baseY = gameCanvas.height / 2; 
+    gameCanvas.focus({ preventScroll: true });
   }
 });
 
@@ -64,15 +76,14 @@ let monsterFrameWidth, monsterFrameHeight;
 monsterImg.onload = () => {
   monsterFrameWidth = monsterImg.width / 4;
   monsterFrameHeight = monsterImg.height / 4;
-
-  checkLoaded(); // ✅ keep loader working
+  checkLoaded(); 
 };
 
 obstacleImg.onload = () => {
-  obstacleFrameWidth = 256;   // adjust after testing
+  obstacleFrameWidth = 256;  
   obstacleFrameHeight = 256;
   console.log("Obstacle loaded:", obstacleImg.width, obstacleImg.height);
-  checkLoaded(); // if you're using loader system
+  checkLoaded(); 
 };
 
 // ==========================
@@ -89,13 +100,11 @@ let frameWidth, frameHeight;
 const keys = {};
 
 gameCanvas.addEventListener("keydown", (e) => {
-
   if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " "].includes(e.key)) {
     e.preventDefault();
   }
 
-  console.log("KEY PRESS:", e.key)
-
+  console.log("KEY PRESS:", e.key);
   keys[e.key] = true;
 
   // shooting
@@ -107,10 +116,9 @@ gameCanvas.addEventListener("keydown", (e) => {
     });
   }
 
-
   if (e.key === "r" && gameOver) {
-  location.reload();
-}
+    location.reload();
+  }
 });
 
 gameCanvas.addEventListener("keyup", (e) => {
@@ -120,48 +128,30 @@ gameCanvas.addEventListener("keyup", (e) => {
 // ==========================
 // PLAYER
 // ==========================
-// const player = {
-//   x: 100,
-//   y: gameCanvas.height - 120,
-//   size: 100,
-
-//   vx: 0,
-//   vy: 0,
-
-//   speed: 0.8,
-//   maxSpeed: 5,
-//   friction: 0.95,
-
-//   gravity: 0.4,
-//   jumpForce: -10,
-
-//   frame: 0
-// };
-
 const player = {
   x: 100,
-  y: gameCanvas.height / 2, // start centered (feels better for flying)
+  y: gameCanvas.height / 2, 
   size: 100,
 
   vx: 0,
   vy: 0,
 
-  speed: 0.4,        // horizontal acceleration
-  vSpeed: 0.6,       // 🔥 vertical control (separate power)
+  speed: 0.4,        
+  vSpeed: 0.6,       
   maxSpeed: 5,
 
   friction: 0.95,
 
-  gravity: 0,        // ❌ REMOVE gravity for space
-  jumpForce: 0,      // ❌ not needed in flying mode
+  gravity: 0,        
+  jumpForce: 0,      
 
   frame: 0
 };
 
 const LANES = [
-  gameCanvas.height - 120, // ground
-  gameCanvas.height / 2,   // mid
-  80                       // top
+  gameCanvas.height - 120, 
+  gameCanvas.height / 2,   
+  80                       
 ];
 
 function getRandomLane() {
@@ -173,11 +163,12 @@ const obstaclePadding = 20;
 let boostOffset = 0;
 
 let boostVelocity = 0;
-let boostPhase = "idle"; // "up", "hold", "down"
+let boostPhase = "idle"; 
 let holdTimer = 0;
 
-let baseY = player.y;   // resting position
+let baseY = player.y;   
 let isBoosting = false;
+
 // ==========================
 // BACKGROUND
 // ==========================
@@ -188,35 +179,22 @@ const bgSpeed = 0.5;
 // BULLETS
 // ==========================
 let bullets = [];
-
 let obstacles = [];
 let spawnTimer = 0;
 
-// sprite grid
 const OBSTACLE_COLS = 4;
 const OBSTACLE_ROWS = 3;
 
 let obstacleFrameWidth, obstacleFrameHeight;
 
-
-
 // ==========================
 // UPDATE
 // ==========================
-
-
-
-
 function update() {
   if (!gameStarted) return;
   if (gameOver) return;
 
-  // ======================
-  // PROGRESSION
-  // ======================
   distance += 0.05;
-
-  // 🔥 SCORE SYSTEM
   score += 0.1;
 
   if (score > hiScore) {
@@ -224,24 +202,14 @@ function update() {
     localStorage.setItem("hiScore", hiScore);
   }
 
-  // 🔥 TIME SYSTEM
   const elapsed = Math.floor((Date.now() - startTime) / 1000);
   const minutes = Math.floor(elapsed / 60);
   const seconds = elapsed % 60;
   window.timeText = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 
-  // ======================
-  // BACKGROUND
-  // ======================
   bgX -= bgSpeed;
   if (bgX <= -gameCanvas.width) bgX += gameCanvas.width;
 
-  // ======================
-  // MOVEMENT
-  // ======================
-  // ======================
-  // 🎮 VERTICAL CONTROL (NEW)
-  // ======================
   if (keys["ArrowUp"]) {
     baseY -= 2;
   }
@@ -249,13 +217,6 @@ function update() {
   if (keys["ArrowDown"]) {
     baseY += 2;
   }
-
-  // ======================
-  // 🚀 BOOST (SPACE TAP)
-  // ======================
-  // ======================
-  // 🚀 BOOST SYSTEM (FIXED)
-  // ======================
 
   if (keys[" "] && boostPhase === "idle") {
     boostPhase = "up";
@@ -270,17 +231,13 @@ function update() {
       boostPhase = "hold";
       holdTimer = 12;
     }
-  }
-
-  else if (boostPhase === "hold") {
+  } else if (boostPhase === "hold") {
     holdTimer--;
 
     if (holdTimer <= 0) {
       boostPhase = "down";
     }
-  }
-
-  else if (boostPhase === "down") {
+  } else if (boostPhase === "down") {
     boostVelocity += 0.15;
     boostOffset += boostVelocity;
 
@@ -291,65 +248,34 @@ function update() {
     }
   }
 
-  // apply movement
   player.y = baseY + boostOffset;
 
-
-
-  // ======================
-  // HORIZONTAL MOVEMENT (RESTORE THIS)
-  // ======================
   if (keys["ArrowRight"]) player.vx += player.speed;
   if (keys["ArrowLeft"]) player.vx -= player.speed;
 
-  // clamp speed
   player.vx = Math.max(-player.maxSpeed, Math.min(player.maxSpeed, player.vx));
-
-  // friction
   player.vx *= player.friction;
-
-
   player.x += player.vx;
-
-
-  // ======================
-  // BOUNDS
-  // ======================
-
 
   player.x = Math.max(0, Math.min(gameCanvas.width - player.size, player.x));
 
   if (player.y < 0) player.y = 0;
 
-
   if (player.y >= GROUND_Y - player.size) {
     player.y = GROUND_Y - player.size;
   }
 
-
-
-  // ======================
-  // BULLETS
-  // ======================
   bullets.forEach(b => b.x += b.speed);
   bullets = bullets.filter(b => b.x < gameCanvas.width);
 
-  // ======================
-  // OBSTACLES
-  // ======================
   spawnTimer++;
 
   if (spawnTimer > 100) {
     spawnTimer = 0;
-
     const type = Math.random();
 
     if (type < 0.65) {
-      // 🧱 OBSTACLE (65%)
-
       const h = 80 + Math.random() * 40;
-
-
       obstacles.push({
         x: gameCanvas.width,
         y: GROUND_Y - h - 2,
@@ -359,16 +285,14 @@ function update() {
         frame: Math.floor(Math.random() * OBSTACLE_COLS),
         health: 3
       });
-
     } else {
-      // 👹 MONSTER (35%)
       monsters.push({
         x: gameCanvas.width,
         y: Math.random() * (gameCanvas.height - 120),
         width: 90,
         height: 90,
         speed: 2.5,
-        type: VALID_MONSTERS[Math.floor(Math.random() * VALID_MONSTERS.length)], // ✅ FIX
+        type: VALID_MONSTERS[Math.floor(Math.random() * VALID_MONSTERS.length)],
         frameTick: 0
       });
     }
@@ -380,12 +304,8 @@ function update() {
 
   obstacles = obstacles.filter(o => o.x + o.width > 0);
 
-  // ======================
-  // 🔥 COLLISION (WITH COOLDOWN)
-  // ======================
   for (let i = obstacles.length - 1; i >= 0; i--) {
     const o = obstacles[i];
-
     const hit =
       player.x + playerPadding < o.x + o.width - obstaclePadding &&
       player.x + player.size - playerPadding > o.x + obstaclePadding &&
@@ -393,10 +313,7 @@ function update() {
       player.y + player.size - playerPadding > o.y + obstaclePadding;
 
     if (hit) {
-
       const now = Date.now();
-
-      // only take damage if enough time passed
       if (now - lastHitTime > hitCooldown) {
         obstacles.splice(i, 1);
         lives--;
@@ -411,18 +328,11 @@ function update() {
     }
   }
 
-  // ======================
-  // 🔥 BULLET vs OBSTACLE
-  // ======================
-  // ======================
-  // 🔥 BULLET vs OBSTACLE (MULTI HIT)
-  // ======================
   for (let i = obstacles.length - 1; i >= 0; i--) {
     const o = obstacles[i];
 
     for (let j = bullets.length - 1; j >= 0; j--) {
       const b = bullets[j];
-
       const hit =
         b.x < o.x + o.width &&
         b.x + 10 > o.x &&
@@ -430,38 +340,26 @@ function update() {
         b.y + 4 > o.y;
 
       if (hit) {
-        // remove bullet ALWAYS
         bullets.splice(j, 1);
-
-        // reduce health
         o.health--;
 
         console.log("Hit obstacle! HP:", o.health);
 
-        // only destroy if health is 0
         if (o.health <= 0) {
           obstacles.splice(i, 1);
-
-          // reward player
           score += 20;
-
           console.log("💥 destroyed!");
         }
-
         break;
       }
     }
   }
 
-  // ======================
-  // 🔥 BULLET vs MONSTER
-  // ======================
   for (let i = monsters.length - 1; i >= 0; i--) {
     const m = monsters[i];
 
     for (let j = bullets.length - 1; j >= 0; j--) {
       const b = bullets[j];
-
       const hit =
         b.x < m.x + m.width &&
         b.x + 10 > m.x &&
@@ -471,31 +369,21 @@ function update() {
       if (hit) {
         bullets.splice(j, 1);
         monsters.splice(i, 1);
-
-        score += 30; // reward
-
+        score += 30; 
         console.log("👹 monster destroyed!");
         break;
       }
     }
   }
 
-  //monsters spawning code
   monsters.forEach(m => {
     m.x -= m.speed;
-
-
   });
 
   monsters = monsters.filter(m => m.x + m.width > 0);
 
-
-  // ======================
-  // 👹 PLAYER vs MONSTER
-  // ======================
   for (let i = monsters.length - 1; i >= 0; i--) {
     const m = monsters[i];
-
     const hit =
       player.x + playerPadding < m.x + m.width - obstaclePadding &&
       player.x + player.size - playerPadding > m.x + obstaclePadding &&
@@ -503,11 +391,10 @@ function update() {
       player.y + player.size - playerPadding > m.y + obstaclePadding;
 
     if (hit) {
-
       const now = Date.now();
 
       if (now - lastHitTime > hitCooldown) {
-        monsters.splice(i, 1); // remove monster
+        monsters.splice(i, 1); 
         lives--;
         lastHitTime = now;
 
@@ -521,15 +408,10 @@ function update() {
   }
 }
 
-
-
-
-
-
-
-
+// ==========================
+// DRAW
+// ==========================
 function draw() {
-
   if (!gameStarted) {
     gctx.fillStyle = "black";
     gctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
@@ -544,22 +426,13 @@ function draw() {
 
   gctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
 
-  // ======================
-  // BACKGROUND
-  // ======================
   gctx.fillStyle = "#02121f";
   gctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
 
   gctx.drawImage(bgImage, bgX, 0, gameCanvas.width, gameCanvas.height);
   gctx.drawImage(bgImage, bgX + gameCanvas.width, 0, gameCanvas.width, gameCanvas.height);
 
-
-
-  // ======================
-  // PLAYER
-  // ======================
   if (frameWidth && frameHeight) {
-
     const col = player.frame % GAME_SPRITE_COLS;
     const row = Math.floor(player.frame / GAME_SPRITE_COLS);
 
@@ -574,44 +447,27 @@ function draw() {
       player.size,
       player.size
     );
-
   }
 
-
-
-  // ======================
-  // 🔥 HIT FLASH EFFECT
-  // ======================
   if (Date.now() - lastHitTime < 200) {
     gctx.fillStyle = "rgba(255,0,0,0.25)";
     gctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
   }
 
-  // ======================
-  // BULLETS
-  // ======================
   gctx.fillStyle = "#00f7ff";
   bullets.forEach(b => {
     gctx.fillRect(b.x, b.y, 10, 4);
   });
 
-
-  // ======================
-  // OBSTACLES
-  // ======================
-
-
   if (obstacleImg.complete && obstacleFrameWidth && obstacleFrameHeight) {
     obstacles.forEach(o => {
       const col = o.frame;
       const row = 0;
-
       const padX = 12;
       const padY = 20;
 
       const srcX = col * obstacleFrameWidth + padX;
       const srcY = row * obstacleFrameHeight + padY;
-
       const srcW = obstacleFrameWidth - padX * 2;
       const srcH = obstacleFrameHeight - padY - 4;
 
@@ -626,17 +482,6 @@ function draw() {
         Math.floor(o.width),
         Math.floor(o.height)
       );
-
-
-      // 🟡 DEBUG HITBOX (KEEP THIS)
-      // gctx.strokeStyle = "yellow";
-      // gctx.strokeRect(
-      //   o.x + obstaclePadding,
-      //   o.y + obstaclePadding,
-      //   o.width - obstaclePadding * 2,
-      //   o.height - obstaclePadding * 2
-      // );
-
     });
   }
 
@@ -644,27 +489,19 @@ function draw() {
     const MONSTER_PADDING = {
       0: { left: 10, right: 14 },
       1: { left: 10, right: 14 },
-      2: { left: 2, right: 6 },   // 👈 FIX black demon (less left crop)
+      2: { left: 2, right: 6 },  
       3: { left: 10, right: 14 }
     };
 
     monsters.forEach(m => {
       const col = m.type % 4;
       const row = 0;
-
-      // 🔥 pull correct padding for this sprite
       const pad = MONSTER_PADDING[m.type] || MONSTER_PADDING[0];
 
-      const padLeft = pad.left;
-      const padRight = pad.right;
-      const padTop = 8;
-      const padBottom = 12;
-
-      const srcX = col * monsterFrameWidth + padLeft;
-      const srcY = row * monsterFrameHeight + padTop;
-
-      const srcW = monsterFrameWidth - padLeft - padRight;
-      const srcH = monsterFrameHeight - padTop - padBottom;
+      const srcX = col * monsterFrameWidth + pad.left;
+      const srcY = row * monsterFrameHeight + 8;
+      const srcW = monsterFrameWidth - pad.left - pad.right;
+      const srcH = monsterFrameHeight - 8 - 12;
 
       gctx.drawImage(
         monsterImg,
@@ -680,9 +517,6 @@ function draw() {
     });
   }
 
-  // ======================
-  // 🔥 HUD BAR
-  // ======================
   gctx.fillStyle = "rgba(0,0,0,0.4)";
   gctx.fillRect(0, 0, gameCanvas.width, 50);
 
@@ -690,7 +524,6 @@ function draw() {
   gctx.font = "bold 18px Arial";
   gctx.textAlign = "right";
 
-  // time
   const elapsed = Math.floor((Date.now() - startTime) / 1000);
   const minutes = Math.floor(elapsed / 60);
   const seconds = elapsed % 60;
@@ -704,12 +537,8 @@ function draw() {
     `Hi-score: ${hiScore}`;
 
   gctx.fillText(hudText, gameCanvas.width - 20, 30);
-
   gctx.textAlign = "left";
 
-  // ======================
-  // 🔥 GAME OVER
-  // ======================
   if (gameOver) {
     gctx.fillStyle = "rgba(0,0,0,0.7)";
     gctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
@@ -729,10 +558,6 @@ function draw() {
 
     gctx.textAlign = "left";
   }
-
-
-
-
 }
 
 // ==========================
@@ -760,14 +585,12 @@ function checkLoaded() {
   loaded++;
   if (loaded === 4) {
     console.log("ALL LOADED");
-    gameCanvas.focus(); // 🔥 start focused
+    // Removed automatic gameCanvas.focus() here so it won't force the page to snap down on load
     loop();
   }
 }
 
 bgImage.onload = checkLoaded;
-
-
 
 playerImg.onload = () => {
   frameWidth = playerImg.width / GAME_SPRITE_COLS;

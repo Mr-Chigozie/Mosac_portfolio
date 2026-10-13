@@ -6,7 +6,7 @@ let currentSearch = "";
 let currentPage = 1;
 let lastFetch = 0;
 let isSorted = false;
-const sortBtn = document.getElementById("sortBtn");
+let cryptoChart = null; // Chart instance tracker
 
 function getUrl() {
   return `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&per_page=20&page=${currentPage}&sparkline=false`;
@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchInput = document.getElementById("cryptoSearch");
   const nextBtn = document.getElementById("nextPage");
   const prevBtn = document.getElementById("prevPage");
+  const metricSelect = document.getElementById("chartMetric");
 
   if (!sortBtn || !searchInput || !nextBtn || !prevBtn) {
     console.error("Missing DOM elements");
@@ -52,6 +53,15 @@ document.addEventListener("DOMContentLoaded", () => {
       loadCoins(true);
     }
   });
+
+  // 📊 CHART METRIC CHANGE LISTENER
+  if (metricSelect) {
+    metricSelect.addEventListener("change", () => {
+      if (allCoins.length > 0) {
+        initCryptoChart(allCoins);
+      }
+    });
+  }
 
   // 🚀 INITIAL LOAD
   loadCoins(true);
@@ -112,12 +122,11 @@ function loadCoins(force = false) {
       applyFilters();
       updateSummary(data);
       updateReport(data);
+      initCryptoChart(data); // 📈 Render/Update graph with fresh data
     })
     .catch(() => {
       showError();
     });
-
-    
 }
 
 // ======================
@@ -129,7 +138,7 @@ function displayCoins(coins) {
   if (!tbody) return;
 
   if (!coins.length) {
-    tbody.innerHTML = "<tr><td colspan='5'>No results</td></tr>";
+    tbody.innerHTML = "<tr><td colspan='5' style='text-align:center;'>No results</td></tr>";
     return;
   }
 
@@ -144,7 +153,7 @@ function displayCoins(coins) {
 
     html += `
       <tr class="${rowClass}">
-        <td>${(currentPage - 1) * 20 + index + 1}</td>
+       <td>${(currentPage - 1) * 20 + index + 1}</td>
 
         <td style="display:flex; align-items:center; gap:8px;">
           <img src="${coin.image}" width="20" height="20" />
@@ -171,6 +180,60 @@ function displayCoins(coins) {
 }
 
 // ======================
+// 📈 CRYPTO CHART RENDERING
+// ======================
+function initCryptoChart(coins) {
+  const ctx = document.getElementById("cryptoChart");
+  if (!ctx) return;
+
+  const metricSelect = document.getElementById("chartMetric");
+  const selectedMetric = metricSelect ? metricSelect.value : "current_price";
+
+  // Take top 10 coins for a clean bar graph layout
+  const topCoins = coins.slice(0, 10);
+  const labels = topCoins.map(coin => coin.symbol.toUpperCase());
+  const dataValues = topCoins.map(coin => coin[selectedMetric]);
+
+  if (cryptoChart) {
+    cryptoChart.destroy(); // Clear old chart instance before rebuilding
+  }
+
+  cryptoChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: selectedMetric === 'current_price' ? 'Price in USD' : 'Market Cap in USD',
+        data: dataValues,
+        backgroundColor: 'rgba(0, 247, 255, 0.6)',
+        borderColor: '#00f7ff',
+        borderWidth: 1,
+        borderRadius: 4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          labels: { color: '#fff' }
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color: '#fff' },
+          grid: { color: 'rgba(255, 255, 255, 0.1)' }
+        },
+        y: {
+          ticks: { color: '#fff' },
+          grid: { color: 'rgba(255, 255, 255, 0.1)' }
+        }
+      }
+    }
+  });
+}
+
+// ======================
 // 🔍 FILTER
 // ======================
 function applyFilters() {
@@ -184,16 +247,14 @@ function applyFilters() {
   }
 
   displayCoins(result);
+  initCryptoChart(result);
 }
 
 // ======================
 // 🔽 SORT
 // ======================
-
-
 function sortByPrice() {
   isSorted = !isSorted;
-
   const btn = document.getElementById("sortBtn");
 
   if (isSorted) {
@@ -209,11 +270,6 @@ function sortByPrice() {
 
   applyFilters();
 }
-
-
-// function sortByPrice() {
-//   console.log("SORT CLICKED"); // 👈 test
-// }
 
 // ======================
 // 📄 PAGE UI
@@ -238,7 +294,7 @@ setInterval(() => {
 }, 60000);
 
 // ======================
-// 🚀 SUMMARY
+// 🚀 SUMMARY & REPORT
 // ======================
 function updateSummary(coins) {
   if (!coins || !coins.length) return;
@@ -259,11 +315,9 @@ function updateSummary(coins) {
     `📉 ${loser.name} (${(loser.price_change_percentage_24h || 0).toFixed(2)}%)`;
 }
 
-
 function updateReport(coins) {
   if (!coins.length) return;
 
-  // 🔝 Gainer / Loser
   const sorted = [...coins].sort(
     (a, b) => b.price_change_percentage_24h - a.price_change_percentage_24h
   );
@@ -271,18 +325,15 @@ function updateReport(coins) {
   const gainer = sorted[0];
   const loser = sorted[sorted.length - 1];
 
-  // 💰 Average Price
   const avg =
     coins.reduce((sum, coin) => sum + coin.current_price, 0) /
     coins.length;
 
-  // 🏦 Total Market Cap
   const totalCap = coins.reduce(
     (sum, coin) => sum + coin.market_cap,
     0
   );
 
-  // 🎯 UPDATE UI
   document.getElementById("reportGainer").textContent =
     `${gainer.name} (+${gainer.price_change_percentage_24h.toFixed(2)}%)`;
 

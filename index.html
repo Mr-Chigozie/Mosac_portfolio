@@ -391,111 +391,188 @@
 
 
 
-    <section id="crypto">
 
-      <div class="crypto-container">
 
-        <!-- LEFT -->
-        <div class="app-panel">
-          <h2>Crypto Tracker</h2>
+<section id="crypto">
 
-          <p>
-            This application displays real-time cryptocurrency data including prices,
-            market trends, and performance metrics.
-          </p>
+  <!-- INTRO -->
+  <div class="crypto-intro">
 
-          <p>
-            <strong>Features:</strong><br>
-            • Live crypto prices<br>
-            • Market trend tracking<br>
-            • Search & filter coins<br>
-          </p>
+    <div class="app-panel">
 
-          <p>
-            <strong>Tech:</strong> HTML, CSS, JavaScript, Crypto API
-          </p>
+      <h2>Crypto Tracker</h2>
+
+      <p>
+        This application displays real-time cryptocurrency data including prices,
+        market trends, and performance metrics.
+      </p>
+
+      <p>
+        <strong>Features:</strong><br>
+        • Live crypto prices<br>
+        • Market trend tracking<br>
+        • Search & filter coins
+      </p>
+
+      <p>
+        <strong>Tech:</strong> HTML, CSS, JavaScript, Crypto API
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- CHART + MARKET OVERVIEW -->
+  <div class="crypto-dashboard">
+
+    <!-- PRICE CHART -->
+    <div class="crypto-chart-container">
+
+      <div class="chart-header-wrapper">
+
+        <h3>📊 Price Comparison</h3>
+
+        <select id="chartMetric">
+
+          <option value="current_price">
+            Price (USD)
+          </option>
+
+          <option value="market_cap">
+            Market Cap
+          </option>
+
+        </select>
+
+      </div>
+
+      <div class="chart-canvas-wrapper">
+        <canvas id="cryptoChart"></canvas>
+      </div>
+
+    </div>
+
+
+    <!-- MARKET OVERVIEW -->
+    <div class="crypto-app">
+
+      <div class="crypto-header">
+        <h3>📊 Market Overview</h3>
+      </div>
+
+
+      <!-- CONTROLS -->
+      <div class="crypto-controls">
+
+        <input
+          type="text"
+          id="cryptoSearch"
+          placeholder="Search coin..."
+        />
+
+        <button id="sortBtn">
+          Sort by Price
+        </button>
+
+      </div>
+
+
+      <!-- REPORTS -->
+      <div class="crypto-report">
+
+        <div class="report-card">
+          <h4>🚀 Top Gainer</h4>
+          <p id="reportGainer">--</p>
         </div>
 
-        <!-- RIGHT -->
-        <div class="crypto-app">
+        <div class="report-card">
+          <h4>📉 Top Loser</h4>
+          <p id="reportLoser">--</p>
+        </div>
 
-          <!-- HEADER -->
-          <div class="crypto-header">
-            <h3>📊 Market Overview</h3>
-          </div>
+        <div class="report-card">
+          <h4>💰 Avg Price</h4>
+          <p id="avgPrice">--</p>
+        </div>
 
-          <!-- CONTROLS -->
-          <div class="crypto-controls">
-            <input type="text" id="cryptoSearch" placeholder="Search coin..." />
-            <button id="sortBtn">Sort by Price</button>
-          </div>
-
-          <!-- 📊 REPORT PANEL (🔥 MOVE UP) -->
-          <div class="crypto-report">
-
-            <div class="report-card">
-              <h4>🚀 Top Gainer</h4>
-              <p id="reportGainer">--</p>
-            </div>
-
-            <div class="report-card">
-              <h4>📉 Top Loser</h4>
-              <p id="reportLoser">--</p>
-            </div>
-
-            <div class="report-card">
-              <h4>💰 Avg Price</h4>
-              <p id="avgPrice">--</p>
-            </div>
-
-            <div class="report-card">
-              <h4>🏦 Total Market Cap</h4>
-              <p id="totalMarketCap">--</p>
-            </div>
-
-          </div>
-
-          <!-- SUMMARY STRIP -->
-          <div class="crypto-summary">
-            <div id="topGainer">🚀 Top Gainer: --</div>
-            <div id="topLoser">📉 Top Loser: --</div>
-          </div>
-
-          <!-- TABLE -->
-          <div class="crypto-table-wrapper">
-            <table id="cryptoTable">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Coin</th>
-                  <th>Price</th>
-                  <th>24h</th>
-                  <th>Market Cap</th>
-                </tr>
-              </thead>
-
-              <tbody id="cryptoBody">
-                <tr>
-                  <td colspan="5" style="text-align:center;">
-                    Loading market data...
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <!-- PAGINATION -->
-          <div class="crypto-pagination">
-            <button id="prevPage">⬅ Prev</button>
-            <span id="pageNumber">Page 1</span>
-            <button id="nextPage">Next ➡</button>
-          </div>
-
+        <div class="report-card">
+          <h4>🏦 Total Market Cap</h4>
+          <p id="totalMarketCap">--</p>
         </div>
 
       </div>
 
-    </section>
+
+      <!-- SUMMARY -->
+      <div class="crypto-summary">
+
+        <div id="topGainer">
+          🚀 Top Gainer: --
+        </div>
+
+        <div id="topLoser">
+          📉 Top Loser: --
+        </div>
+
+      </div>
+
+
+      <!-- TABLE -->
+      <div class="crypto-table-wrapper">
+
+        <table id="cryptoTable">
+
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Coin</th>
+              <th>Price</th>
+              <th>24h</th>
+              <th>Market Cap</th>
+            </tr>
+          </thead>
+
+          <tbody id="cryptoBody">
+
+            <tr>
+              <td colspan="5" style="text-align:center;">
+                Loading market data...
+              </td>
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+      <!-- PAGINATION -->
+      <div class="crypto-pagination">
+
+        <button id="prevPage">
+          ⬅ Prev
+        </button>
+
+        <span id="pageNumber">
+          Page 1
+        </span>
+
+        <button id="nextPage">
+          Next ➡
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
 
 
     <section id="paint">
