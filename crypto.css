@@ -1,470 +1,440 @@
 
+/* =====================================================
+   CRYPTO TRACKER — MAIN LAYOUT
+===================================================== */
 
+#crypto {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px 40px;
+  box-sizing: border-box;
+}
+
+#crypto *,
+#crypto *::before,
+#crypto *::after {
+  box-sizing: border-box;
+}
+
+/* =====================================================
+   INTRO / PROJECT HEADER
+===================================================== */
 
 .crypto-intro {
+  width: 100%;
   max-width: 1000px;
-  margin: 0 auto 30px auto;
+  margin: 0 auto 28px;
 }
 
 .crypto-intro .app-panel {
-  padding: 25px 30px;
+  width: 100%;
+  padding: 24px 30px;
+  border-radius: 16px;
+  overflow-wrap: anywhere;
 }
 
+.crypto-intro h2 {
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+.crypto-intro p {
+  line-height: 1.7;
+}
 
 /* =====================================================
-   CRYPTO DASHBOARD
+   DASHBOARD — CHART + MARKET OVERVIEW
 ===================================================== */
 
 .crypto-dashboard {
-
-  max-width: 1100px;
-
-  margin: 30px auto 0;
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
 
   display: grid;
 
-  /* Chart gets more width, market stays compact */
-  grid-template-columns: 1.6fr 0.9fr;
-
-  gap: 30px;
+  /*
+    Market overview gets enough room for its table.
+    The chart remains the dominant visual panel.
+  */
+  grid-template-columns:
+    minmax(0, 1.05fr)
+    minmax(0, 1fr);
 
   align-items: start;
+  gap: 24px;
 }
 
-
 /* =====================================================
-   PRICE CHART PANEL
+   SHARED PANEL STYLING
 ===================================================== */
 
-.crypto-chart-container {
-
-  padding: 30px;
-
-  border-radius: 16px;
-
-  background: rgba(20, 25, 45, 0.6);
-
-  backdrop-filter: blur(12px);
-
-  border: 1px solid rgba(0, 247, 255, 0.15);
-
-  box-shadow:
-    0 10px 40px rgba(0, 0, 0, 0.4),
-    inset 0 0 30px rgba(0, 247, 255, 0.05);
-
-  position: relative;
-
-  overflow: hidden;
-
-  min-width: 0;
-}
-
-
-/* =====================================================
-   MARKET OVERVIEW
-===================================================== */
-
+.crypto-chart-container,
 .crypto-app {
-
-  padding: 25px;
+  position: relative;
+  min-width: 0;
+  width: 100%;
+  padding: 24px;
 
   border-radius: 16px;
-
-  background: rgba(20, 25, 45, 0.6);
-
+  background: rgba(20, 25, 45, 0.75);
   backdrop-filter: blur(12px);
 
   border: 1px solid rgba(0, 247, 255, 0.15);
 
   box-shadow:
-    0 10px 40px rgba(0, 0, 0, 0.4),
-    inset 0 0 30px rgba(0, 247, 255, 0.05);
-
-  position: relative;
-
-  overflow: hidden;
-
-  min-width: 0;
+    0 10px 35px rgba(0, 0, 0, 0.28),
+    inset 0 0 24px rgba(0, 247, 255, 0.035);
 }
-
-
-/* =====================================================
-   GLOW
-===================================================== */
 
 .crypto-chart-container::before,
 .crypto-app::before {
-
   content: "";
-
   position: absolute;
-
   inset: 0;
 
   background: linear-gradient(
     120deg,
     transparent,
-    rgba(0, 247, 255, 0.08),
+    rgba(0, 247, 255, 0.045),
     transparent
   );
 
   pointer-events: none;
+  border-radius: inherit;
 }
 
-
-/* =====================================================
-   MARKET HEADER
-===================================================== */
-
-.crypto-header {
-
-  margin-bottom: 15px;
-
-  padding-bottom: 10px;
-
-  border-bottom: 1px solid rgba(0, 247, 255, 0.1);
+/* Keep actual panel content above the decorative layer. */
+.crypto-chart-container > *,
+.crypto-app > * {
+  position: relative;
 }
-
-
-.crypto-header h3 {
-
-  color: #00f7ff;
-
-  margin: 0;
-
-  font-size: 1.05rem;
-}
-
 
 /* =====================================================
    CHART HEADER
 ===================================================== */
 
 .chart-header-wrapper {
-
   display: flex;
-
   justify-content: space-between;
-
   align-items: center;
-
-  gap: 15px;
+  flex-wrap: wrap;
+  gap: 12px;
 
   margin-bottom: 20px;
 }
 
+.chart-header-wrapper h3,
+.crypto-header h3 {
+  color: #00f7ff;
+  margin: 0;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
 
 .chart-header-wrapper h3 {
-
-  color: #00f7ff;
-
-  margin: 0;
-
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 }
-
-
-/* =====================================================
-   CHART SELECT
-===================================================== */
 
 #chartMetric {
+  max-width: 100%;
+  min-width: 0;
+  padding: 9px 12px;
 
-  padding: 8px 14px;
-
-  background: rgba(19, 34, 56, 0.8);
-
+  background: #132238;
   color: #00f7ff;
-
   border: 1px solid rgba(0, 247, 255, 0.3);
-
   border-radius: 8px;
-
   outline: none;
-
   cursor: pointer;
 }
-
 
 /* =====================================================
    CHART CANVAS
 ===================================================== */
 
 .chart-canvas-wrapper {
-
   position: relative;
-
   width: 100%;
-
-  /*
-   * Reduced from 430px.
-   * Keeps the chart visually strong without
-   * making the left panel unnecessarily tall.
-   */
+  min-width: 0;
   height: 360px;
 }
 
+/* Canvas must follow its wrapper dimensions. */
+#cryptoChart {
+  display: block;
+  max-width: 100%;
+}
 
 /* =====================================================
-   MARKET CONTROLS
+   MARKET HEADER
+===================================================== */
+
+.crypto-header {
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(0, 247, 255, 0.14);
+}
+
+.crypto-header h3 {
+  font-size: 1.1rem;
+}
+
+/* =====================================================
+   SEARCH AND SORT
 ===================================================== */
 
 .crypto-controls {
-
-  display: flex;
-
-  gap: 8px;
-
-  margin-bottom: 15px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  margin-bottom: 18px;
 }
-
 
 .crypto-controls input {
-
   width: 100%;
-
   min-width: 0;
-
-  padding: 9px;
+  height: 40px;
+  padding: 0 12px;
 
   border-radius: 8px;
-
-  border: 1px solid rgba(0, 247, 255, 0.3);
-
-  background: transparent;
-
+  border: 1px solid rgba(0, 247, 255, 0.25);
+  background: rgba(255, 255, 255, 0.035);
   color: #e2e8f0;
+  outline: none;
 }
 
+.crypto-controls input:focus {
+  border-color: #00f7ff;
+}
+
+.crypto-controls input::placeholder {
+  color: #94a3b8;
+}
 
 .crypto-controls button {
-
-  padding: 9px 12px;
+  min-height: 40px;
+  padding: 0 12px;
 
   border-radius: 8px;
-
   background: #00f7ff;
-
   color: #020617;
-
   border: none;
-
   cursor: pointer;
-
   white-space: nowrap;
-
   font-size: 12px;
+  font-weight: 600;
 }
 
-
 /* =====================================================
-   REPORT CARDS
+   MARKET REPORT CARDS
 ===================================================== */
 
 .crypto-report {
-
   display: grid;
-
-  grid-template-columns: repeat(2, 1fr);
-
-  gap: 8px;
-
-  margin-bottom: 15px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 16px;
 }
 
-
 .report-card {
-
-  padding: 11px;
+  min-width: 0;
+  padding: 14px 10px;
 
   border-radius: 10px;
-
-  background: rgba(255,255,255,0.04);
-
-  border: 1px solid rgba(0, 247, 255, 0.15);
-
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(0, 247, 255, 0.13);
   text-align: center;
 }
 
-
 .report-card h4 {
-
-  font-size: 11px;
-
-  margin-bottom: 5px;
-
+  margin: 0 0 8px;
   color: #00f7ff;
+  font-size: 11px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
 }
-
 
 .report-card p {
-
-  font-size: 14px;
-
-  font-weight: bold;
-
-  color: #ffffff;
-
   margin: 0;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
 }
 
-
 /* =====================================================
-   SUMMARY
+   MARKET SUMMARY
 ===================================================== */
 
 .crypto-summary {
-
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 6px;
-
-  margin-bottom: 15px;
-
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+  margin-bottom: 18px;
   font-size: 12px;
 }
 
-
 .crypto-summary div {
-
-  padding: 6px 8px;
+  min-width: 0;
+  padding: 9px 10px;
 
   border-radius: 8px;
-
-  background: rgba(0, 247, 255, 0.05);
-
+  background: rgba(0, 247, 255, 0.045);
   border: 1px solid rgba(0, 247, 255, 0.1);
 
-  white-space: nowrap;
-
-  overflow: hidden;
-
-  text-overflow: ellipsis;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
-
 /* =====================================================
-   TABLE
+   MARKET TABLE
 ===================================================== */
 
 .crypto-table-wrapper {
-
+  width: 100%;
+  min-width: 0;
   overflow-x: auto;
+  border-radius: 8px;
 }
 
-
 #cryptoTable {
-
   width: 100%;
-
+  min-width: 460px;
   border-collapse: collapse;
-
   font-size: 12px;
 }
 
-
-#cryptoTable th {
-
+#cryptoTable th,
+#cryptoTable td {
+  padding: 11px 8px;
   text-align: left;
-
-  padding: 8px;
-
-  color: #00f7ff;
-
-  border-bottom: 1px solid rgba(0, 247, 255, 0.2);
+  vertical-align: middle;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
+#cryptoTable th {
+  color: #00f7ff;
+  font-weight: 600;
+  white-space: nowrap;
+  background: rgba(0, 247, 255, 0.035);
+}
 
 #cryptoTable td {
-
-  padding: 8px;
-
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-
   color: #e2e8f0;
 }
 
+#cryptoTable tbody tr:hover {
+  background: rgba(0, 247, 255, 0.035);
+}
 
 /* =====================================================
    PAGINATION
 ===================================================== */
 
 .crypto-pagination {
-
   display: flex;
-
   justify-content: space-between;
-
   align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
 
-  margin-top: 12px;
-
+  margin-top: 16px;
   font-size: 12px;
 }
 
-
 .crypto-pagination button {
+  padding: 8px 11px;
 
-  padding: 6px 10px;
-
-  border-radius: 6px;
-
+  border-radius: 7px;
   background: transparent;
-
   border: 1px solid #00f7ff;
-
   color: #00f7ff;
-
   cursor: pointer;
-
   font-size: 11px;
 }
 
-
-/* =====================================================
-   MOBILE / TABLET
-===================================================== */
-
-@media (max-width: 900px) {
-
-  .crypto-dashboard {
-
-    grid-template-columns: 1fr;
-  }
-
-  .chart-canvas-wrapper {
-
-    height: 350px;
-  }
-
+.crypto-pagination button:hover {
+  background: rgba(0, 247, 255, 0.1);
 }
 
+/* =====================================================
+   TABLET — STACK PANELS
+===================================================== */
 
-@media (max-width: 600px) {
-
+@media (max-width: 1000px) {
   .crypto-dashboard {
-
-    gap: 20px;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
   }
 
   .crypto-chart-container,
   .crypto-app {
+    padding: 22px;
+  }
 
+  .chart-canvas-wrapper {
+    height: 340px;
+  }
+}
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+  #crypto {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .crypto-intro {
+    margin-bottom: 20px;
+  }
+
+  .crypto-intro .app-panel {
     padding: 20px;
   }
 
+  .crypto-dashboard {
+    gap: 18px;
+  }
+
+  .crypto-chart-container,
+  .crypto-app {
+    padding: 16px;
+    border-radius: 12px;
+  }
+
   .chart-header-wrapper {
-
+    align-items: stretch;
     flex-direction: column;
+    gap: 12px;
+  }
 
-    align-items: flex-start;
+  #chartMetric {
+    width: 100%;
+  }
+
+  .chart-canvas-wrapper {
+    height: 280px;
   }
 
   .crypto-controls {
-
-    flex-direction: column;
+    grid-template-columns: minmax(0, 1fr);
   }
 
+  .crypto-controls button {
+    width: 100%;
+  }
+
+  .report-card {
+    padding: 12px 8px;
+  }
+
+  .crypto-pagination {
+    gap: 8px;
+  }
 }
