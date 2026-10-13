@@ -438,3 +438,107 @@
     gap: 8px;
   }
 }
+
+
+/* =========================================
+   CRYPTO — PROPER WIDTH AND SPACING
+========================================= */
+
+#crypto {
+  display: block;
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 24px 40px;
+  box-sizing: border-box;
+}
+
+/* Intro/header: centered and constrained */
+#crypto .crypto-intro {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto 32px;
+}
+
+#crypto .crypto-intro .app-panel {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* Dashboard sits below the intro, never overlaps it */
+#crypto .crypto-dashboard {
+  position: relative;
+  clear: both;
+  width: 100%;
+  max-width: none;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+/* Keep both panels contained */
+#crypto .crypto-chart-container,
+#crypto .crypto-app {
+  position: relative;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* Prevent long content from forcing panel expansion */
+#crypto .chart-header-wrapper,
+#crypto .crypto-header,
+#crypto .crypto-controls,
+#crypto .crypto-report,
+#crypto .crypto-summary,
+#crypto .crypto-table-wrapper {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Chart stays within its own panel */
+#crypto .chart-canvas-wrapper {
+  position: relative;
+  width: 100%;
+  height: 340px;
+  min-width: 0;
+}
+
+#crypto #cryptoChart {
+  display: block;
+  max-width: 100%;
+}
+
+/* Tablet */
+@media (max-width: 950px) {
+  #crypto .crypto-dashboard {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  #crypto {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  #crypto .crypto-intro {
+    margin-bottom: 22px;
+  }
+
+  #crypto .crypto-dashboard {
+    gap: 18px;
+  }
+
+  #crypto .chart-canvas-wrapper {
+    height: 280px;
+  }
+}
