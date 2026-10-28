@@ -1,0 +1,964 @@
+/* =====================================================
+   THEME — site-wide design layer
+   Loaded last: unifies tokens, typography, spacing and
+   panel styling across every section without touching
+   each app's own stylesheet.
+===================================================== */
+
+:root {
+  /* colour */
+  --bg-main: #070b18;
+  --bg-alt: #0d1326;
+  --accent: #00f7ff;
+  --accent-2: #8a7dff;
+  --accent-soft: rgba(0, 247, 255, 0.1);
+  --ink: #e6edf7;
+  --ink-2: #b4c0d4;
+  --muted: #7f8ca3;
+  --line: rgba(140, 220, 255, 0.12);
+  --line-strong: rgba(0, 247, 255, 0.35);
+  --surface: linear-gradient(180deg, rgba(22, 30, 56, 0.72), rgba(11, 16, 33, 0.72));
+
+  /* type */
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* layout */
+  --container: 1200px;
+  --gutter: 24px;
+  --section-space: clamp(56px, 8vw, 96px);
+  --radius: 14px;
+  --radius-lg: 20px;
+  --shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 24px 60px -28px rgba(0, 0, 0, 0.7);
+  --nav-h: 66px;
+}
+
+/* =====================================================
+   BASE
+===================================================== */
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--nav-h) + 12px);
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 15px;
+  letter-spacing: normal;
+  line-height: 1.6;
+  color: var(--ink);
+  background:
+    radial-gradient(1200px 700px at 10% -10%, rgba(0, 247, 255, 0.08), transparent 60%),
+    radial-gradient(900px 600px at 100% 30%, rgba(138, 125, 255, 0.07), transparent 60%),
+    var(--bg-main);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4,
+.eyebrow,
+nav,
+kbd,
+.tier,
+.project-tech span,
+.stack span,
+.btn-primary,
+.btn-secondary {
+  font-family: var(--font-mono);
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+::selection {
+  background: rgba(0, 247, 255, 0.3);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+html {
+  scrollbar-color: rgba(0, 247, 255, 0.35) var(--bg-main);
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-main);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 247, 255, 0.25);
+  border: 2px solid var(--bg-main);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 247, 255, 0.45);
+}
+
+/* =====================================================
+   SECTION RHYTHM + CONTAINERS
+===================================================== */
+
+section {
+  margin-bottom: 0;
+}
+
+/* the nav floats over the hero, so no offset is needed — it was pushing
+   the full-height hero (and its buttons) 70px below the fold */
+main {
+  padding-top: 0;
+}
+
+/* #hero in the selector so this outranks each section's own #id padding */
+main > section:not(#hero) {
+  padding: var(--section-space) var(--gutter) 0;
+}
+
+.about-panel,
+.skills-panel,
+.projects-panel,
+.game-panel,
+.weather-container,
+.paint-container,
+.livescore-container {
+  max-width: var(--container);
+}
+
+#crypto {
+  max-width: calc(var(--container) + var(--gutter) * 2);
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+
+.weather-container,
+.paint-container,
+.livescore-container {
+  gap: var(--gutter);
+}
+
+/* =====================================================
+   SECTION HEADINGS
+===================================================== */
+
+.eyebrow {
+  display: block;
+  margin-bottom: 10px;
+
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  opacity: 0.85;
+}
+
+.about-panel > .eyebrow,
+.skills-panel > .eyebrow,
+.projects-panel > .eyebrow,
+.game-panel > .eyebrow,
+.lab-intro > .eyebrow {
+  text-align: center;
+}
+
+.about-panel h2,
+#skills h2,
+#projects h2,
+#game h2,
+.lab-intro h2,
+.app-panel h2,
+#weather h2 {
+  font-size: clamp(26px, 3vw, 36px);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+
+  background: linear-gradient(90deg, #f2fdff 0%, var(--accent) 55%, var(--accent-2) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: none;
+}
+
+.about-panel h2,
+#skills h2,
+#projects h2,
+#game h2 {
+  margin-bottom: 32px;
+}
+
+/* gradient text must size to its content to look right on centred titles */
+.about-panel h2,
+#skills h2,
+#projects h2,
+#game h2,
+.lab-intro h2 {
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.app-panel h2 {
+  margin-bottom: 14px;
+}
+
+/* =====================================================
+   PANELS — one recipe for every glass card
+===================================================== */
+
+.about-panel,
+.skills-panel,
+.projects-panel,
+.game-panel,
+.app-panel,
+.weather-app,
+.paint-app,
+.livescore-app,
+#crypto .crypto-panel,
+#crypto .crypto-intro,
+.kpi-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.about-panel,
+.skills-panel,
+.projects-panel,
+.game-panel {
+  margin: 0 auto;
+  padding: clamp(28px, 4vw, 48px);
+  border-radius: var(--radius-lg);
+}
+
+.app-panel,
+.weather-app,
+.paint-app,
+.livescore-app {
+  border-radius: var(--radius-lg);
+}
+
+/* thin highlight along the top edge of each panel */
+.about-panel,
+.skills-panel,
+.projects-panel {
+  position: relative;
+}
+
+.about-panel::after,
+.skills-panel::after,
+.projects-panel::after,
+.game-panel::after,
+.app-panel::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 12%;
+  right: 12%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 247, 255, 0.6), transparent);
+  pointer-events: none;
+}
+
+.app-panel p,
+.game-panel p {
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--ink-2);
+  opacity: 1;
+}
+
+.app-panel strong,
+.game-panel strong {
+  display: inline-block;
+  margin-bottom: 2px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+.btn-primary,
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 22px;
+
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 10px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.btn-primary {
+  color: #021018;
+  background: linear-gradient(135deg, #5ffbff, var(--accent) 45%, #00c2ff);
+  box-shadow: 0 8px 28px -8px rgba(0, 247, 255, 0.6);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #8afcff, #22f8ff 45%, #29ccff);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 34px -8px rgba(0, 247, 255, 0.75);
+}
+
+.btn-secondary {
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--line-strong);
+  backdrop-filter: blur(8px);
+}
+
+.btn-secondary:hover {
+  color: var(--accent);
+  background: var(--accent-soft);
+  transform: translateY(-2px);
+}
+
+/* =====================================================
+   NAV
+===================================================== */
+
+header nav {
+  height: var(--nav-h);
+  padding: 0 clamp(16px, 4vw, 40px);
+  background: rgba(7, 11, 24, 0.55);
+  border-bottom: 1px solid transparent;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+header.scrolled nav {
+  background: rgba(7, 11, 24, 0.88);
+  border-bottom-color: var(--line);
+  box-shadow: 0 10px 30px -18px rgba(0, 0, 0, 0.8);
+}
+
+.logo {
+  gap: 12px;
+  text-decoration: none;
+}
+
+.logo-text {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+}
+
+.logo-text span {
+  color: var(--accent);
+}
+
+nav ul {
+  align-items: center;
+  gap: clamp(14px, 2.4vw, 30px);
+}
+
+nav ul li a {
+  color: var(--ink-2);
+  letter-spacing: 0.04em;
+}
+
+nav ul li a.current {
+  color: var(--accent);
+}
+
+nav ul li a.current::after {
+  width: 100%;
+}
+
+nav ul li a.nav-cta {
+  padding: 8px 16px;
+  color: var(--accent);
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--accent-soft);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+nav ul li a.nav-cta::before,
+nav ul li a.nav-cta::after {
+  display: none;
+}
+
+nav ul li a.nav-cta:hover {
+  color: #021018;
+  background: var(--accent);
+}
+
+@media (max-width: 768px) {
+  nav ul {
+    top: var(--nav-h);
+    gap: 4px;
+    padding: 12px 20px 20px;
+    background: rgba(7, 11, 24, 0.97);
+    border-bottom: 1px solid var(--line);
+  }
+
+  nav ul li a.nav-cta {
+    display: inline-block;
+    margin-top: 8px;
+  }
+
+  .logo-text {
+    display: none;
+  }
+}
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.hero-intro {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(56px, 9vh, 96px);
+  transform: translateX(-50%);
+  z-index: 10;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+
+  width: min(720px, calc(100% - 32px));
+  text-align: center;
+  pointer-events: none;
+}
+
+.hero-intro a {
+  pointer-events: auto;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(7, 11, 24, 0.6);
+  backdrop-filter: blur(8px);
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.6);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  70% { box-shadow: 0 0 0 8px rgba(52, 211, 153, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+}
+
+.hero-tagline {
+  max-width: 560px;
+  font-size: clamp(15px, 1.6vw, 18px);
+  line-height: 1.6;
+  color: var(--ink-2);
+  text-shadow: 0 2px 12px rgba(7, 11, 24, 0.9);
+}
+
+.hero-tagline strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* the actions now live inside .hero-intro instead of floating on their own */
+.hero-intro .hero-actions {
+  position: static;
+  transform: none;
+  justify-content: center;
+  width: auto;
+  max-width: none;
+  padding: 0;
+  gap: 14px;
+}
+
+.hero-hint {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.scroll-cue {
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  z-index: 10;
+  transform: translateX(-50%);
+
+  width: 22px;
+  height: 34px;
+  border: 2px solid rgba(230, 237, 247, 0.35);
+  border-radius: 12px;
+}
+
+.scroll-cue span {
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  width: 4px;
+  height: 7px;
+  margin-left: -2px;
+  border-radius: 2px;
+  background: var(--accent);
+  animation: scroll-cue 1.8s ease-in-out infinite;
+}
+
+@keyframes scroll-cue {
+  0% { opacity: 0; transform: translateY(0); }
+  30% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(12px); }
+}
+
+@media (max-width: 768px) {
+  .hero-intro {
+    bottom: 64px;
+    gap: 14px;
+  }
+
+  .hero-intro .hero-actions {
+    flex-direction: row;
+  }
+
+  .hero-hint {
+    display: none;
+  }
+}
+
+@media (max-height: 700px) {
+  .hero-intro {
+    bottom: 48px;
+  }
+
+  .hero-badge,
+  .scroll-cue {
+    display: none;
+  }
+}
+
+/* =====================================================
+   ABOUT
+===================================================== */
+
+#about {
+  overflow: visible;
+}
+
+.about-subtitle {
+  margin: -16px auto 36px;
+  max-width: 560px;
+  text-align: center;
+  color: var(--ink-2);
+}
+
+.about-tabs button {
+  padding: 8px 18px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.about-tabs button:hover {
+  color: var(--accent);
+  border-color: var(--line-strong);
+}
+
+.about-tabs button.active {
+  color: #021018;
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+/* inactive tabs are display:none, so the active one can take real space
+   instead of floating over the photo when the layout stacks */
+.tab {
+  position: relative;
+}
+
+.about-text p {
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--ink-2);
+}
+
+.about-image {
+  position: relative;
+}
+
+/* soft glow behind the portrait */
+.about-image::before {
+  content: "";
+  position: absolute;
+  inset: 10%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 247, 255, 0.22), transparent 70%);
+  filter: blur(20px);
+  pointer-events: none;
+}
+
+.about-sprite {
+  position: relative;
+  border-radius: 18px;
+  border: 1px solid var(--line-strong);
+  box-shadow: 0 20px 40px -16px rgba(0, 0, 0, 0.8);
+}
+
+/* =====================================================
+   SKILLS — two columns on wide screens
+===================================================== */
+
+.skills-accordion {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 16px;
+}
+
+.skill-category {
+  border-color: var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.skill-header {
+  padding: 18px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.skill-category.active .skill-header,
+.skill-header:hover {
+  color: var(--accent);
+}
+
+.skill-row {
+  font-size: 14px;
+  color: var(--ink-2);
+}
+
+@media (max-width: 760px) {
+  .skills-accordion {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* =====================================================
+   PROJECTS — 2 + 3 grid, no orphan gaps
+===================================================== */
+
+.projects-grid {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.project-card {
+  position: relative;
+  grid-column: span 2;
+
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+
+  border-color: var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.025);
+  overflow: hidden;
+}
+
+.project-card:nth-child(-n + 2) {
+  grid-column: span 3;
+}
+
+.project-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease;
+}
+
+.project-card:hover::before {
+  transform: scaleX(1);
+}
+
+.project-card:hover {
+  border-color: var(--line-strong);
+  box-shadow: 0 18px 40px -20px rgba(0, 247, 255, 0.35);
+}
+
+.project-index {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(0, 247, 255, 0.35);
+}
+
+.project-card h3 {
+  padding-right: 36px;
+  font-size: 17px;
+  line-height: 1.35;
+  color: var(--ink);
+}
+
+.project-card:hover h3 {
+  color: var(--accent);
+}
+
+.project-card p {
+  margin-bottom: 16px;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--ink-2);
+  opacity: 1;
+}
+
+.project-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: auto;
+}
+
+.project-tech span {
+  margin: 0;
+  padding: 4px 10px;
+  font-size: 11px;
+  color: var(--accent);
+  border: 1px solid rgba(0, 247, 255, 0.22);
+  border-radius: 999px;
+  background: var(--accent-soft);
+}
+
+@media (max-width: 900px) {
+  .projects-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .project-card,
+  .project-card:nth-child(-n + 2) {
+    grid-column: span 1;
+  }
+
+  .project-card:last-child:nth-child(odd) {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 600px) {
+  .projects-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .project-card:last-child:nth-child(odd) {
+    grid-column: span 1;
+  }
+}
+
+/* =====================================================
+   LAB INTRO
+===================================================== */
+
+.lab-intro {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: calc(var(--section-space) * 1.2) var(--gutter) 0;
+  text-align: center;
+}
+
+.lab-intro h2 {
+  margin-bottom: 12px;
+}
+
+.lab-intro > p {
+  max-width: 520px;
+  margin: 0 auto 24px;
+  color: var(--ink-2);
+}
+
+.lab-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.lab-links a {
+  padding: 8px 16px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink-2);
+  text-decoration: none;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
+  transition: color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.lab-links a:hover {
+  color: var(--accent);
+  border-color: var(--line-strong);
+  transform: translateY(-2px);
+}
+
+/* =====================================================
+   GAME / APP DETAILS
+===================================================== */
+
+.game-panel > p:not(.game-hint) {
+  max-width: 780px;
+}
+
+.game-controls span {
+  color: var(--ink-2);
+}
+
+/* the paint app hard-codes a dark heading colour inline */
+.saved-gallery h4 {
+  color: var(--ink-2) !important;
+}
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+#footer {
+  margin-top: var(--section-space);
+  padding: 64px var(--gutter) 28px;
+  background: linear-gradient(180deg, rgba(13, 19, 38, 0.6), rgba(7, 11, 24, 0.95));
+  border-top: 1px solid var(--line);
+}
+
+.footer-container {
+  max-width: var(--container);
+}
+
+#footer h3 {
+  font-size: 20px;
+  background: linear-gradient(90deg, #f2fdff, var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+#footer h4 {
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+#footer p,
+.footer-links a,
+.footer-socials a {
+  font-size: 14px;
+  color: var(--ink-2);
+}
+
+.footer-links a,
+.footer-socials a {
+  display: inline-block;
+  margin-bottom: 8px;
+  width: fit-content;
+}
+
+.footer-links,
+.footer-socials {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-bottom {
+  max-width: var(--container);
+  margin: 48px auto 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  opacity: 1;
+}
+
+@media (max-width: 700px) {
+  .footer-container {
+    flex-direction: column;
+    gap: 28px;
+  }
+}
+
+/* =====================================================
+   SCROLL REVEAL (classes added by nav.js)
+===================================================== */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.reveal.in-view {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .pulse-dot,
+  .scroll-cue span,
+  .about-sprite {
+    animation: none;
+  }
+}

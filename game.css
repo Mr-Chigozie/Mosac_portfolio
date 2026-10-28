@@ -14,6 +14,7 @@
 
   background: rgba(20, 25, 45, 0.6);
   backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 
   border: 1px solid rgba(0, 247, 255, 0.15);
 
@@ -46,6 +47,7 @@
   font-size: 32px;
   margin-bottom: 30px;
   color: #00f7ff;
+  text-shadow: 0 0 18px rgba(0, 247, 255, 0.45);
 }
 
 /* TEXT */
@@ -61,44 +63,111 @@
   color: #00f7ff;
 }
 
-#gameCanvas {
-  display: block;
-  margin: 30px auto 0;
-
-  width: 100%;
-  max-width: 900px;   /* 🔥 wider */
-  height: 480px;
-
-  background: #020617;
-  border-radius: 12px;
-
-  border: 1px solid rgba(0, 247, 255, 0.2);
-
-  box-shadow:
-    0 0 20px rgba(0, 247, 255, 0.2),
-    inset 0 0 20px rgba(0, 247, 255, 0.05);
-
-  outline: none;
-}
-
-#gameCanvas:focus {
-  border-color: #00f7ff;
-  box-shadow:
-    0 0 25px rgba(0, 247, 255, 0.5),
-    inset 0 0 20px rgba(0, 247, 255, 0.1);
-}
-
-.controls {
+/* CONTROLS */
+.game-controls {
   margin-top: 15px;
   font-size: 13px;
-  opacity: 0.85;
+  opacity: 0.9;
 }
 
-.controls span {
-  display: inline-block;
-  margin: 4px 10px 4px 0;
-  padding: 4px 8px;
+.game-controls span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 6px 12px 0 0;
+}
 
-  border: 1px solid rgba(0, 247, 255, 0.3);
+.game-controls kbd {
+  display: inline-block;
+  min-width: 26px;
+  padding: 3px 8px;
+
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  text-align: center;
+  color: #e6fdff;
+
+  background: rgba(0, 247, 255, 0.08);
+  border: 1px solid rgba(0, 247, 255, 0.35);
+  border-bottom-width: 3px;
   border-radius: 6px;
+}
+
+/* GAME SCREEN */
+.game-stage {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  margin: 30px auto 0;
+  padding: 6px;
+
+  border-radius: 16px;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 247, 255, 0.35),
+    rgba(120, 80, 255, 0.25) 50%,
+    rgba(0, 247, 255, 0.35)
+  );
+
+  box-shadow:
+    0 0 30px rgba(0, 247, 255, 0.18),
+    0 20px 50px rgba(0, 0, 0, 0.5);
+
+  transition: box-shadow 0.3s ease;
+}
+
+.game-stage:focus-within {
+  box-shadow:
+    0 0 45px rgba(0, 247, 255, 0.45),
+    0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+#gameCanvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+
+  background: #020617;
+  border-radius: 11px;
+
+  outline: none;
+  cursor: pointer;
+
+  /* hold-to-thrust on touch screens instead of scrolling the page */
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.game-hint {
+  margin-top: 12px;
+  text-align: center;
+  font-size: 12px !important;
+  opacity: 0.6 !important;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  #game {
+    padding: 80px 12px;
+  }
+
+  .game-panel {
+    padding: 28px 18px;
+  }
+
+  #game h2 {
+    font-size: 26px;
+  }
+
+  .game-stage {
+    padding: 4px;
+    border-radius: 12px;
+  }
+
+  #gameCanvas {
+    border-radius: 9px;
+  }
 }

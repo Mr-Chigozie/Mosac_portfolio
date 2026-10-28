@@ -3,7 +3,10 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>My Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Chigozie Ofodile — full-stack developer building scalable systems and interactive web apps.">
+  <meta name="theme-color" content="#070b18">
+  <title>Chigozie Ofodile — Full-Stack Developer</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="nav.css">
   <link rel="stylesheet" href="main.css">
@@ -17,10 +20,11 @@
   <link rel="stylesheet" href="paint.css">
   <link rel="stylesheet" href="live.css">
   <link rel="stylesheet" href="footer.css">
+  <link rel="stylesheet" href="theme.css">
 
-
-
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -102,6 +106,7 @@
           </g>
 
         </svg>
+        <span class="logo-text">Chigozie<span>.</span>Ofodile</span>
       </div>
 
       <!-- 🔥 hamburger -->
@@ -113,7 +118,8 @@
         <li><a href="#about">About</a></li>
         <li><a href="#skills">Skills</a></li>
         <li><a href="#projects">Projects</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#lab">Lab</a></li>
+        <li><a href="#contact" class="nav-cta">Contact</a></li>
       </ul>
     </nav>
   </header>
@@ -126,13 +132,22 @@
 
       <svg id="stickSVG" viewBox="0 0 1600 500"></svg>
 
-      <div class="hero-actions">
-        <a href="#projects" class="btn-primary">View Projects</a>
-        <a href="#contact" class="btn-secondary">Contact</a>
+      <div class="hero-intro">
+        <span class="hero-badge"><span class="pulse-dot"></span> Open to new opportunities</span>
+        <p class="hero-tagline">
+          <strong>Chigozie Ofodile</strong> · Full-stack developer building scalable systems
+          and interactive web experiences.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#projects" class="btn-primary">View Projects</a>
+          <a href="#contact" class="btn-secondary">Get in Touch</a>
+        </div>
+
+        <span class="hero-hint">Hover the lines to assemble them ✦</span>
       </div>
 
-
-
+      <a href="#about" class="scroll-cue" aria-label="Scroll to About"><span></span></a>
 
     </section>
 
@@ -141,6 +156,7 @@
 
       <div class="about-panel">
 
+        <span class="eyebrow">01 · About</span>
         <h2>About Me</h2>
         <p class="about-subtitle">
           Building interactive systems, tools, and experiences on the web.
@@ -192,6 +208,7 @@
     <section id="skills" class="fade-in">
 
       <div class="skills-panel">
+        <span class="eyebrow">02 · Skills</span>
         <h2>Skills</h2>
 
         <div class="skills-accordion" id="skillsContainer">
@@ -210,6 +227,7 @@
 
       <div class="projects-panel">
 
+        <span class="eyebrow">03 · Work</span>
         <h2>Projects</h2>
 
         <div class="projects-grid" id="projectsContainer">
@@ -221,12 +239,27 @@
     </section>
 
 
+    <!-- Lab intro -->
+    <div class="lab-intro" id="lab">
+      <span class="eyebrow">04 · Lab</span>
+      <h2>Interactive Lab</h2>
+      <p>Live mini apps built from scratch — play, search and draw right here on the page.</p>
+
+      <div class="lab-links">
+        <a href="#game">🚀 Mini World</a>
+        <a href="#weather">⛅ Weather</a>
+        <a href="#crypto">📈 Crypto</a>
+        <a href="#paint">🎨 Drawing</a>
+        <a href="#livescore">⚽ Live Score</a>
+      </div>
+    </div>
 
 
     <section id="game">
 
       <div class="game-panel">
 
+        <span class="eyebrow">Lab · Game</span>
         <h2>Mini World</h2>
 
         <p>
@@ -235,12 +268,14 @@
           The game features real-time movement, collision detection, scoring, and dynamic enemy spawning.
         </p>
 
-        <p class="controls">
+        <p class="game-controls">
           <strong>Controls:</strong><br>
-          <span>Arrow Keys – Move</span>
-          <span>Space – Jump</span>
-          <span>F – Shoot</span>
-          <span>R – Restart</span>
+          <span><kbd>Space</kbd> / <kbd>↑</kbd> Thrust (fight gravity)</span>
+          <span><kbd>←</kbd> <kbd>→</kbd> Move</span>
+          <span><kbd>↓</kbd> Dive</span>
+          <span><kbd>F</kbd> Shoot (hold)</span>
+          <span><kbd>P</kbd> Pause</span>
+          <span><kbd>R</kbd> Restart</span>
         </p>
 
         <p>
@@ -254,7 +289,10 @@
           environment.
         </p>
 
-        <canvas id="gameCanvas" tabindex="0"></canvas>
+        <div class="game-stage">
+          <canvas id="gameCanvas" tabindex="0" aria-label="Mini World game"></canvas>
+        </div>
+        <p class="game-hint">Click the screen to play · on touch screens, hold to thrust and fire · catch the unicorn for an extra life</p>
 
       </div>
 
@@ -275,6 +313,7 @@
         <!-- LEFT: DESCRIPTION -->
         <div class="app-panel">
 
+          <span class="eyebrow">Lab · API</span>
           <h2>Weather App</h2>
           <p id="loadingText" style="display:none;">Loading...</p>
           <p>
@@ -395,130 +434,119 @@
 
 <section id="crypto">
 
-  <!-- INTRO -->
-  <div class="crypto-intro">
+  <!-- HEADER: intro + key stats -->
+  <div class="crypto-top">
 
-    <div class="app-panel">
-
+    <div class="crypto-intro app-panel">
+      <span class="eyebrow">Lab · Data</span>
       <h2>Crypto Tracker</h2>
 
       <p>
-        This application displays real-time cryptocurrency data including prices,
-        market trends, and performance metrics.
+        Real-time cryptocurrency prices, market trends and performance metrics,
+        powered by the CoinGecko API.
       </p>
 
-      <p>
-        <strong>Features:</strong><br>
-        • Live crypto prices<br>
-        • Market trend tracking<br>
-        • Search & filter coins
-      </p>
+      <ul class="crypto-tags">
+        <li>Live prices</li>
+        <li>Trend tracking</li>
+        <li>Search &amp; filter</li>
+        <li>Chart.js</li>
+        <li>JavaScript</li>
+      </ul>
+    </div>
 
-      <p>
-        <strong>Tech:</strong> HTML, CSS, JavaScript, Crypto API
-      </p>
+    <div class="crypto-kpis">
+
+      <div class="kpi-card">
+        <span class="kpi-label">Market Cap</span>
+        <strong class="kpi-value" id="totalMarketCap">--</strong>
+        <span class="kpi-sub">coins on this page</span>
+      </div>
+
+      <div class="kpi-card">
+        <span class="kpi-label">Top Gainer</span>
+        <strong class="kpi-value up" id="reportGainer">--</strong>
+        <span class="kpi-sub">24h change</span>
+      </div>
+
+      <div class="kpi-card">
+        <span class="kpi-label">Top Loser</span>
+        <strong class="kpi-value down" id="reportLoser">--</strong>
+        <span class="kpi-sub">24h change</span>
+      </div>
+
+      <div class="kpi-card">
+        <span class="kpi-label">Market Mood</span>
+        <strong class="kpi-value" id="marketBreadth">--</strong>
+        <div class="breadth-bar"><span id="breadthFill"></span></div>
+      </div>
 
     </div>
 
   </div>
 
 
-  <!-- CHART + MARKET OVERVIEW -->
+  <!-- DASHBOARD -->
   <div class="crypto-dashboard">
 
-    <!-- PRICE CHART -->
-    <div class="crypto-chart-container">
+    <!-- LEFT: chart + movers -->
+    <div class="crypto-side">
 
-      <div class="chart-header-wrapper">
+      <div class="crypto-chart-container crypto-panel">
 
-        <h3>📊 Price Comparison</h3>
+        <div class="panel-header">
+          <h3>Top 10 Comparison</h3>
 
-        <select id="chartMetric">
+          <select id="chartMetric" aria-label="Chart metric">
+            <option value="current_price">Price (log scale)</option>
+            <option value="market_cap">Market Cap (log scale)</option>
+            <option value="price_change_percentage_24h">24h Change %</option>
+          </select>
+        </div>
 
-          <option value="current_price">
-            Price (USD)
-          </option>
-
-          <option value="market_cap">
-            Market Cap
-          </option>
-
-        </select>
+        <div class="chart-canvas-wrapper">
+          <canvas id="cryptoChart"></canvas>
+        </div>
 
       </div>
 
-      <div class="chart-canvas-wrapper">
-        <canvas id="cryptoChart"></canvas>
+      <div class="crypto-movers crypto-panel">
+
+        <div class="movers-col">
+          <h4>▲ Biggest Gainers</h4>
+          <ul id="gainersList"><li class="movers-empty">--</li></ul>
+        </div>
+
+        <div class="movers-col">
+          <h4>▼ Biggest Losers</h4>
+          <ul id="losersList"><li class="movers-empty">--</li></ul>
+        </div>
+
       </div>
 
     </div>
 
 
-    <!-- MARKET OVERVIEW -->
-    <div class="crypto-app">
+    <!-- RIGHT: market table -->
+    <div class="crypto-app crypto-panel">
 
-      <div class="crypto-header">
-        <h3>📊 Market Overview</h3>
+      <div class="panel-header">
+        <h3>Market Overview</h3>
+
+        <div class="crypto-controls">
+          <input
+            type="search"
+            id="cryptoSearch"
+            placeholder="Search coin..."
+            aria-label="Search coin"
+          />
+
+          <button id="sortBtn" type="button">
+            Sort: Rank
+          </button>
+        </div>
       </div>
 
-
-      <!-- CONTROLS -->
-      <div class="crypto-controls">
-
-        <input
-          type="text"
-          id="cryptoSearch"
-          placeholder="Search coin..."
-        />
-
-        <button id="sortBtn">
-          Sort by Price
-        </button>
-
-      </div>
-
-
-      <!-- REPORTS -->
-      <div class="crypto-report">
-
-        <div class="report-card">
-          <h4>🚀 Top Gainer</h4>
-          <p id="reportGainer">--</p>
-        </div>
-
-        <div class="report-card">
-          <h4>📉 Top Loser</h4>
-          <p id="reportLoser">--</p>
-        </div>
-
-        <div class="report-card">
-          <h4>💰 Avg Price</h4>
-          <p id="avgPrice">--</p>
-        </div>
-
-        <div class="report-card">
-          <h4>🏦 Total Market Cap</h4>
-          <p id="totalMarketCap">--</p>
-        </div>
-
-      </div>
-
-
-      <!-- SUMMARY -->
-      <div class="crypto-summary">
-
-        <div id="topGainer">
-          🚀 Top Gainer: --
-        </div>
-
-        <div id="topLoser">
-          📉 Top Loser: --
-        </div>
-
-      </div>
-
-
-      <!-- TABLE -->
       <div class="crypto-table-wrapper">
 
         <table id="cryptoTable">
@@ -527,40 +555,39 @@
             <tr>
               <th>#</th>
               <th>Coin</th>
-              <th>Price</th>
-              <th>24h</th>
-              <th>Market Cap</th>
+              <th class="num">Price</th>
+              <th class="num">24h</th>
+              <th class="num">Market Cap</th>
+              <th class="spark-col">7d</th>
             </tr>
           </thead>
 
           <tbody id="cryptoBody">
-
             <tr>
-              <td colspan="5" style="text-align:center;">
+              <td colspan="6" class="table-message">
                 Loading market data...
               </td>
             </tr>
-
           </tbody>
 
         </table>
 
       </div>
 
-
-      <!-- PAGINATION -->
       <div class="crypto-pagination">
 
-        <button id="prevPage">
-          ⬅ Prev
+        <button id="prevPage" type="button">
+          ← Prev
         </button>
 
         <span id="pageNumber">
           Page 1
         </span>
 
-        <button id="nextPage">
-          Next ➡
+        <span id="lastUpdated" class="last-updated"></span>
+
+        <button id="nextPage" type="button">
+          Next →
         </button>
 
       </div>
@@ -581,6 +608,7 @@
 
         <!-- LEFT: DESCRIPTION -->
         <div class="app-panel">
+          <span class="eyebrow">Lab · Canvas</span>
           <h2>Drawing Tool</h2>
 
           <p>
@@ -678,6 +706,7 @@
 
         <!-- LEFT -->
         <div class="app-panel">
+          <span class="eyebrow">Lab · Sports</span>
           <h2>Live Score Predictor</h2>
 
           <p>
@@ -761,11 +790,11 @@
         <a href="#about">About</a>
         <a href="#skills">Skills</a>
         <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
+        <a href="#lab">Lab</a>
       </div>
 
       <!-- RIGHT -->
-      <div class="footer-socials">
+      <div class="footer-socials" id="contact">
         <h4>Connect</h4>
         <a href="#">GitHub</a>
         <a href="#">LinkedIn</a>

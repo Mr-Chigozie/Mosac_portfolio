@@ -37,9 +37,10 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  container.innerHTML = projectsData.map(project => `
+  container.innerHTML = projectsData.map((project, index) => `
     <div class="project-card">
 
+      <span class="project-index">${String(index + 1).padStart(2, "0")}</span>
       <h3>${project.title}</h3>
       <p>${project.description}</p>
 
