@@ -643,49 +643,228 @@ nav ul li a.nav-cta:hover {
 }
 
 /* =====================================================
-   SKILLS — two columns on wide screens
+   SECTION LEAD (intro line under a centred title)
 ===================================================== */
+
+.section-lead {
+  max-width: 620px;
+  margin: -16px auto 28px;
+  text-align: center;
+  color: var(--ink-2);
+}
+
+/* =====================================================
+   SKILLS — always-visible category cards
+===================================================== */
+
+.skills-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px 22px;
+  margin-bottom: 28px;
+  font-size: 13px;
+  color: var(--ink-2);
+}
+
+.skills-legend > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.skills-legend-note {
+  color: var(--muted);
+}
 
 .skills-accordion {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  align-items: start;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
   gap: 16px;
+  text-align: left;
 }
 
 .skill-category {
+  display: flex;
+  flex-direction: column;
   border-color: var(--line);
   border-radius: var(--radius);
   background: rgba(255, 255, 255, 0.025);
 }
 
+.skill-category:hover {
+  transform: translateY(-3px);
+  border-color: var(--line-strong);
+}
+
 .skill-header {
-  padding: 18px 20px;
-  font-size: 14px;
-  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 20px 14px;
+  cursor: default;
+}
+
+.skill-header:hover {
+  background: transparent;
+}
+
+.skill-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  font-size: 16px;
+  color: var(--accent);
+  border: 1px solid rgba(0, 247, 255, 0.25);
+  border-radius: 10px;
+  background: var(--accent-soft);
+}
+
+.skill-header h3 {
+  flex: 1;
+  margin: 0;
+  font-size: 15px;
   color: var(--ink);
 }
 
-.skill-category.active .skill-header,
-.skill-header:hover {
-  color: var(--accent);
+.skill-count {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* the old accordion collapsed this – every card is open now */
+.skill-content,
+.skill-category.active .skill-content {
+  max-height: none;
+  overflow: visible;
+  padding: 0 8px 10px;
 }
 
 .skill-row {
+  gap: 10px;
+  padding: 8px 12px;
+  border-top: none;
+  border-radius: 8px;
   font-size: 14px;
   color: var(--ink-2);
 }
 
-@media (max-width: 760px) {
+.skill-name {
+  flex: 1;
+}
+
+.skill-usage {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  cursor: help;
+}
+
+.skill-row:hover .skill-usage {
+  color: var(--accent);
+}
+
+.tier {
+  display: inline-grid;
+  place-items: center;
+  min-width: 24px;
+  padding: 2px 6px;
+  font-size: 11px;
+}
+
+@media (max-width: 1000px) {
+  .skills-accordion {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
   .skills-accordion {
     grid-template-columns: minmax(0, 1fr);
   }
 }
 
 /* =====================================================
-   PROJECTS — 2 + 3 grid, no orphan gaps
+   PROJECTS — stats, filters, cards, work strip
 ===================================================== */
 
+.project-stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 8px 24px;
+  margin-bottom: 22px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.project-stats strong {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.project-stats a {
+  font-family: var(--font-mono);
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.project-stats a:hover {
+  text-decoration: underline;
+}
+
+.project-filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 26px;
+}
+
+.project-filters button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.project-filters button span {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.project-filters button:hover {
+  color: var(--accent);
+  border-color: var(--line-strong);
+}
+
+.project-filters button.active {
+  color: #021018;
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+.project-filters button.active span {
+  color: rgba(2, 16, 24, 0.65);
+}
+
+/* 6-column grid: featured cards take half a row, the rest a third,
+   so 2 featured + 6 others fill three clean rows */
 .projects-grid {
   grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 18px;
@@ -697,7 +876,7 @@ nav ul li a.nav-cta:hover {
 
   display: flex;
   flex-direction: column;
-  padding: 24px;
+  padding: 22px;
 
   border-color: var(--line);
   border-radius: var(--radius);
@@ -705,8 +884,15 @@ nav ul li a.nav-cta:hover {
   overflow: hidden;
 }
 
-.project-card:nth-child(-n + 2) {
+.project-card[hidden] {
+  display: none;
+}
+
+.projects-grid:not(.filtered) .project-card.featured {
   grid-column: span 3;
+  background:
+    radial-gradient(500px 220px at 100% 0%, rgba(0, 247, 255, 0.08), transparent 70%),
+    rgba(255, 255, 255, 0.03);
 }
 
 .project-card::before {
@@ -722,7 +908,8 @@ nav ul li a.nav-cta:hover {
   transition: transform 0.35s ease;
 }
 
-.project-card:hover::before {
+.project-card:hover::before,
+.project-card.featured::before {
   transform: scaleX(1);
 }
 
@@ -731,21 +918,64 @@ nav ul li a.nav-cta:hover {
   box-shadow: 0 18px 40px -20px rgba(0, 247, 255, 0.35);
 }
 
-.project-index {
-  position: absolute;
-  top: 18px;
-  right: 20px;
+.project-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.project-type {
+  padding: 3px 10px;
   font-family: var(--font-mono);
-  font-size: 13px;
-  font-weight: 700;
-  color: rgba(0, 247, 255, 0.35);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: 6px;
+}
+
+.type-fullstack {
+  color: var(--accent);
+  background: rgba(0, 247, 255, 0.1);
+}
+
+.type-game {
+  color: #c4b5fd;
+  background: rgba(138, 125, 255, 0.14);
+}
+
+.type-frontend {
+  color: #fcd34d;
+  background: rgba(252, 211, 77, 0.1);
+}
+
+.project-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.project-status.live {
+  color: #34d399;
+}
+
+.project-status .pulse-dot {
+  width: 7px;
+  height: 7px;
 }
 
 .project-card h3 {
-  padding-right: 36px;
-  font-size: 17px;
-  line-height: 1.35;
+  margin-bottom: 8px;
+  font-size: 18px;
+  line-height: 1.3;
   color: var(--ink);
+}
+
+.project-card.featured h3 {
+  font-size: 21px;
 }
 
 .project-card:hover h3 {
@@ -753,11 +983,37 @@ nav ul li a.nav-cta:hover {
 }
 
 .project-card p {
-  margin-bottom: 16px;
+  margin-bottom: 14px;
   font-size: 14px;
   line-height: 1.65;
   color: var(--ink-2);
   opacity: 1;
+}
+
+.project-highlights {
+  margin: 0 0 16px;
+  padding: 0;
+  list-style: none;
+}
+
+/* keep cards even when a filter mixes featured and regular cards */
+.projects-grid.filtered .project-highlights {
+  display: none;
+}
+
+.project-highlights li {
+  position: relative;
+  padding: 4px 0 4px 20px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+.project-highlights li::before {
+  content: "▸";
+  position: absolute;
+  left: 2px;
+  color: var(--accent);
 }
 
 .project-tech {
@@ -769,36 +1025,123 @@ nav ul li a.nav-cta:hover {
 
 .project-tech span {
   margin: 0;
-  padding: 4px 10px;
+  padding: 3px 9px;
   font-size: 11px;
   color: var(--accent);
-  border: 1px solid rgba(0, 247, 255, 0.22);
+  border: 1px solid rgba(0, 247, 255, 0.2);
   border-radius: 999px;
   background: var(--accent-soft);
 }
 
-@media (max-width: 900px) {
-  .projects-grid {
+.project-links {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 14px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: none;
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.project-link:hover {
+  color: var(--accent);
+  background: var(--accent-soft);
+  transform: translateY(-1px);
+}
+
+.project-link.primary {
+  color: #021018;
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+.project-link.primary:hover {
+  color: #021018;
+  background: #5ffbff;
+}
+
+/* private / professional work */
+.work-projects {
+  margin-top: 36px;
+  padding-top: 28px;
+  border-top: 1px dashed var(--line);
+}
+
+.work-title {
+  margin-bottom: 16px;
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.work-title span {
+  margin-left: 8px;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.work-card {
+  display: flex;
+  flex-direction: column;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.work-card h4 {
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.work-card p {
+  margin-bottom: 12px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+
+@media (max-width: 960px) {
+  .projects-grid,
+  .projects-grid.filtered {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .project-card,
-  .project-card:nth-child(-n + 2) {
+  .projects-grid:not(.filtered) .project-card.featured {
     grid-column: span 1;
   }
 
-  .project-card:last-child:nth-child(odd) {
-    grid-column: span 2;
+  .work-grid {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
-@media (max-width: 600px) {
-  .projects-grid {
+@media (max-width: 640px) {
+  .projects-grid,
+  .projects-grid.filtered {
     grid-template-columns: minmax(0, 1fr);
-  }
-
-  .project-card:last-child:nth-child(odd) {
-    grid-column: span 1;
   }
 }
 

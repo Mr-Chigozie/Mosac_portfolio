@@ -1,74 +1,39 @@
-const skillsData = [
-  {
-    category: "Frontend Development",
-    skills: [
-      { name: "HTML", tier: "S" },
-      { name: "CSS", tier: "A" },
-      { name: "React", tier: "A" },
-      { name: "JavaScript", tier: "S" }
-    ]
-  },
-  {
-    category: "Backend Development",
-    skills: [
-      { name: "Node.js", tier: "A" },
-      { name: "Express", tier: "A" }
-    ]
-  },
-  {
-    category: "Databases",
-    skills: [
-      { name: "MongoDB", tier: "B" },
-      { name: "MySQL", tier: "A" }
-    ]
-  },
-   {
-    category: "Testing & Quality Assurance",
-    skills: [
-      { name: "Unit Testing", tier: "A" },
-      { name: "Integration Testing", tier: "B" },
-      { name: "API Testing", tier: "A" },
-      { name: "Debugging", tier: "S" }
-    ]
-  }
-];
+document.addEventListener("DOMContentLoaded", () => {
 
-const container = document.getElementById("skillsContainer");
+  const container = document.getElementById("skillsContainer");
+  if (!container) return;
 
-container.innerHTML = skillsData.map(category => `
-  <div class="skill-category">
+  // which public apps use each skill, matched against project tech tags
+  const allProjects = [...PROJECTS, ...WORK_PROJECTS];
+  const usedIn = (skill) => allProjects.filter(p => p.tech.includes(skill)).map(p => p.title);
 
-    <button class="skill-header">
-      ${category.category}
-      <span class="arrow">▼</span>
-    </button>
+  const TIER_LABELS = { S: "Expert", A: "Advanced", B: "Proficient" };
 
-    <div class="skill-content">
-      ${category.skills.map(skill => `
-        <div class="skill-row">
-          <span>${skill.name}</span>
-          <span class="tier tier-${skill.tier.toLowerCase()}">
-            ${skill.tier}
-          </span>
-        </div>
-      `).join("")}
+  container.innerHTML = SKILLS.map(category => `
+    <div class="skill-category">
+
+      <div class="skill-header">
+        <span class="skill-icon" aria-hidden="true">${category.icon}</span>
+        <h3>${category.category}</h3>
+        <span class="skill-count">${category.skills.length}</span>
+      </div>
+
+      <div class="skill-content">
+        ${category.skills.map(skill => {
+          const apps = usedIn(skill.name);
+          return `
+            <div class="skill-row"${apps.length ? ` title="Used in: ${apps.join(", ")}"` : ""}>
+              <span class="skill-name">${skill.name}</span>
+              ${apps.length ? `<span class="skill-usage">${apps.length} app${apps.length > 1 ? "s" : ""}</span>` : ""}
+              <span class="tier tier-${skill.tier.toLowerCase()}" title="${TIER_LABELS[skill.tier]}">
+                ${skill.tier}
+              </span>
+            </div>
+          `;
+        }).join("")}
+      </div>
+
     </div>
+  `).join("");
 
-  </div>
-`).join("");
-
-const categories = document.querySelectorAll(".skill-category");
-
-categories.forEach(category => {
-  const header = category.querySelector(".skill-header");
-
-  header.addEventListener("click", () => {
-    const isOpen = category.classList.contains("active");
-
-    categories.forEach(c => c.classList.remove("active"));
-
-    if (!isOpen) {
-      category.classList.add("active");
-    }
-  });
 });
